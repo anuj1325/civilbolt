@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure React Flow background is visible */
+.react-flow__background {
+  opacity: 1 !important;
+  z-index: 0 !important;
+}
+
+/* Custom classes for signup page */
+.text-heading-1 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+}
+
+.text-heading-2 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
+}
+
+.text-heading-3 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-body-bold {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 600;
+}
+
+.text-caption {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.font-heading-1 {
+  font-weight: 700;
+}
+
+.font-heading-2 {
+  font-weight: 600;
+}
+
+.font-heading-3 {
+  font-weight: 600;
+}
+
+.font-body {
+  font-weight: 400;
+}
+
+.font-body-bold {
+  font-weight: 600;
+}
+
+.font-caption {
+  font-weight: 400;
+}
+
+.text-default-font {
+  color: #111827;
+}
+
+.text-subtext-color {
+  color: #6b7280;
+}
+
+.border-neutral-border {
+  border-color: #e5e7eb;
+}
+
+.bg-neutral-50 {
+  background-color: #f9fafb;
+}
+
+.bg-neutral-950 {
+  background-color: #0a0a0a;
+}
+
+.bg-neutral-200 {
+  background-color: #e5e7eb;
+}
+
+.from-highlight-green {
+  --tw-gradient-from: #10b981;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(16, 185, 129, 0));
+}
+
+.to-highlight-blue {
+  --tw-gradient-to: #3b82f6;
+}
+
+/* Mobile responsive classes */
+@media (max-width: 768px) {
+  .mobile\:flex-col {
+    flex-direction: column;
+  }
+  
+  .mobile\:flex-wrap {
+    flex-wrap: wrap;
+  }
+  
+  .mobile\:gap-0 {
+    gap: 0;
+  }
+  
+  .mobile\:h-auto {
+    height: auto;
+  }
+  
+  .mobile\:w-full {
+    width: 100%;
+  }
+  
+  .mobile\:flex-none {
+    flex: none;
+  }
+  
+  .mobile\:max-w-\[448px\] {
+    max-width: 448px;
+  }
+}
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

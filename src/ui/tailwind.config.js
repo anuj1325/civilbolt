@@ -1,0 +1,217 @@
+module.exports = {
+  // ...
+
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          50: "rgb(240, 253, 244)",
+          100: "rgb(220, 252, 231)",
+          200: "rgb(187, 247, 208)",
+          300: "rgb(134, 239, 172)",
+          400: "rgb(74, 222, 128)",
+          500: "rgb(34, 197, 94)",
+          600: "rgb(22, 163, 74)",
+          700: "rgb(21, 128, 61)",
+          800: "rgb(22, 101, 52)",
+          900: "rgb(20, 83, 45)",
+        },
+        neutral: {
+          0: "rgb(255, 255, 255)",
+          50: "rgb(249, 250, 251)",
+          100: "rgb(243, 244, 246)",
+          200: "rgb(229, 231, 235)",
+          300: "rgb(209, 213, 219)",
+          400: "rgb(156, 163, 175)",
+          500: "rgb(107, 114, 128)",
+          600: "rgb(75, 85, 99)",
+          700: "rgb(55, 65, 81)",
+          800: "rgb(31, 41, 55)",
+          900: "rgb(17, 24, 39)",
+          950: "rgb(3, 7, 18)",
+        },
+        error: {
+          50: "rgb(255, 241, 242)",
+          100: "rgb(255, 228, 230)",
+          200: "rgb(254, 205, 211)",
+          300: "rgb(253, 164, 175)",
+          400: "rgb(251, 113, 133)",
+          500: "rgb(244, 63, 94)",
+          600: "rgb(225, 29, 72)",
+          700: "rgb(190, 18, 60)",
+          800: "rgb(159, 18, 57)",
+          900: "rgb(136, 19, 55)",
+        },
+        warning: {
+          50: "rgb(255, 247, 237)",
+          100: "rgb(255, 237, 213)",
+          200: "rgb(254, 215, 170)",
+          300: "rgb(253, 186, 116)",
+          400: "rgb(251, 146, 60)",
+          500: "rgb(249, 115, 22)",
+          600: "rgb(234, 88, 12)",
+          700: "rgb(194, 65, 12)",
+          800: "rgb(154, 52, 18)",
+          900: "rgb(124, 45, 18)",
+        },
+        success: {
+          50: "rgb(247, 254, 231)",
+          100: "rgb(236, 252, 203)",
+          200: "rgb(217, 249, 157)",
+          300: "rgb(190, 242, 100)",
+          400: "rgb(163, 230, 53)",
+          500: "rgb(132, 204, 22)",
+          600: "rgb(101, 163, 13)",
+          700: "rgb(77, 124, 15)",
+          800: "rgb(63, 98, 18)",
+          900: "rgb(54, 83, 20)",
+        },
+        "custom-palette": {
+          "brand-primary": "rgb(21, 195, 154)",
+          "default-font": "rgb(76, 76, 76)",
+          "subtext-color": "rgb(75, 85, 99)",
+          "neutral-border": "rgb(224, 224, 224)",
+          white: "rgb(255, 255, 255)",
+          "default-background": "rgb(249, 249, 249)",
+          "highlight-red": "rgb(255, 99, 99)",
+          "highlight-blue": "rgb(37, 81, 218)",
+          "highlight-green": "rgb(21, 195, 154)",
+          "highlight-purple": "rgb(151, 117, 250)",
+        },
+        "brand-primary": "rgb(21, 195, 154)",
+        "default-font": "rgb(17, 24, 39)",
+        "subtext-color": "rgb(75, 85, 99)",
+        "neutral-border": "rgb(229, 231, 235)",
+        white: "rgb(255, 255, 255)",
+        "default-background": "rgb(255, 255, 255)",
+        "highlight-red": "rgb(255, 99, 99)",
+        "highlight-blue": "rgb(37, 81, 218)",
+        "highlight-green": "rgb(21, 195, 154)",
+        "highlight-purple": "rgb(151, 117, 250)",
+        boulder: "rgb(54, 143, 166)",
+      },
+      fontSize: {
+        caption: [
+          "12px",
+          {
+            lineHeight: "16px",
+            fontWeight: "400",
+            letterSpacing: "0em",
+          },
+        ],
+        "caption-bold": [
+          "16px",
+          {
+            lineHeight: "16px",
+            fontWeight: "500",
+            letterSpacing: "0em",
+          },
+        ],
+        body: [
+          "14px",
+          {
+            lineHeight: "20px",
+            fontWeight: "400",
+            letterSpacing: "0em",
+          },
+        ],
+        "body-bold": [
+          "14px",
+          {
+            lineHeight: "20px",
+            fontWeight: "500",
+            letterSpacing: "0em",
+          },
+        ],
+        "heading-3": [
+          "16px",
+          {
+            lineHeight: "20px",
+            fontWeight: "600",
+            letterSpacing: "0em",
+          },
+        ],
+        "heading-2": [
+          "20px",
+          {
+            lineHeight: "24px",
+            fontWeight: "600",
+            letterSpacing: "0em",
+          },
+        ],
+        "heading-1": [
+          "30px",
+          {
+            lineHeight: "36px",
+            fontWeight: "600",
+            letterSpacing: "0em",
+          },
+        ],
+        "monospace-body": [
+          "14px",
+          {
+            lineHeight: "20px",
+            fontWeight: "400",
+            letterSpacing: "0em",
+          },
+        ],
+        "custom-text": [
+          "14px",
+          {
+            lineHeight: "20px",
+            fontWeight: "400",
+            letterSpacing: "0em",
+          },
+        ],
+      },
+      fontFamily: {
+        caption: ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "caption-bold": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        body: ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "body-bold": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "heading-3": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "heading-2": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "heading-1": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+        "monospace-body": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"], // Note: Bookman Old Style is not a monospace font, so you may want a different font here
+        "custom-text": ["Bookman Old Style", "Georgia", "Times New Roman", "serif"],
+      },
+      boxShadow: {
+        sm: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        default: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        md: "0px 4px 16px -2px rgba(0, 0, 0, 0.08), 0px 2px 4px -1px rgba(0, 0, 0, 0.08)",
+        lg: "0px 12px 32px -4px rgba(0, 0, 0, 0.08), 0px 4px 8px -2px rgba(0, 0, 0, 0.08)",
+        overlay:
+          "0px 12px 32px -4px rgba(0, 0, 0, 0.08), 0px 4px 8px -2px rgba(0, 0, 0, 0.08)",
+      },
+      borderRadius: {
+        sm: "4px",
+        md: "8px",
+        DEFAULT: "8px",
+        lg: "12px",
+        full: "9999px",
+      },
+      container: {
+        padding: {
+          DEFAULT: "16px",
+          sm: "calc((100vw + 16px - 640px) / 2)",
+          md: "calc((100vw + 16px - 768px) / 2)",
+          lg: "calc((100vw + 16px - 1024px) / 2)",
+          xl: "calc((100vw + 16px - 1280px) / 2)",
+          "2xl": "calc((100vw + 16px - 1536px) / 2)",
+        },
+      },
+      spacing: {
+        112: "28rem",
+        144: "36rem",
+        192: "48rem",
+        256: "64rem",
+        320: "80rem",
+      },
+      screens: {
+        mobile: {
+          max: "767px",
+        },
+      },
+    },
+  },
+};
