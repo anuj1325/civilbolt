@@ -12,6 +12,8 @@ import ContractorActionHub from "./components/ContractorActionHub";
 import SelectExistingProject from "./components/SelectExistingProject";
 import Pre_BuiltTemplets from "./components/PrebuiltTemplets";
 import { WorkflowFlow } from "./components/WorkflowFlow";
+import TemporalFlowWorkflow from "./components/TemporalFlowWorkflow";
+import ProjectManagement from "./components/ProjectManagement";
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -26,8 +28,6 @@ const AppContent: React.FC = () => {
   const handleSelectProject = (projectName: string) => {
     setSelectedProject(projectName);
   };
-
-  
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -90,6 +90,26 @@ const AppContent: React.FC = () => {
             )
           }
         />
+        <Route
+          path="/temporal-flow-workflow"
+          element={
+            isAuthenticated ? (
+              <TemporalFlowWorkflow selectedProject={selectedProject} />
+            ) : (
+              <SignInPage onNavigate={handleNavigate} />
+            )
+          }
+        />
+        <Route
+          path="/project-management"
+          element={
+            isAuthenticated ? (
+              <ProjectManagement />
+            ) : (
+              <SignInPage onNavigate={handleNavigate} />
+            )
+          }
+        />
         <Route path="/" element={<SignUpPage onNavigate={handleNavigate} />} />
       </Routes>
     </div>
@@ -104,7 +124,6 @@ const App: React.FC = () => {
       authorizationParams={{
         redirect_uri: window.location.origin,
       }}
-      
     >
       <Router>
         <AppContent />

@@ -195,6 +195,43 @@ function Pre_BuiltTemplets({
                   </div>
                 </div>
               </div>
+              <div className="flex h-48 flex-col items-start overflow-hidden rounded-md border border-solid border-neutral-border bg-white">
+                  <div className="flex h-48 flex-col items-start overflow-hidden rounded-md border border-solid border-neutral-border bg-white cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => onNavigate("temporal-flow-workflow")}
+                  >
+                    <div className="flex h-1 w-full flex-none items-start bg-brand-primary" />
+                    <div className="flex w-full grow shrink-0 basis-0 flex-col items-start justify-between px-4 py-4">
+                      <div className="flex w-full flex-col items-start gap-2">
+                        <span className="text-heading-3 font-heading-3 text-default-font">
+                          Temporal Flow
+                        </span>
+                        <span className="text-body font-body text-subtext-color">
+                          Workflow for contract upload, site handover, design phase, obligations, and SOP
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <IconButton
+                          variant="brand-primary"
+                          size="small"
+                          icon="FeatherPlay"
+                          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                            event.stopPropagation();
+                            onNavigate("temporal-flow-workflow");
+                          }}
+                        />
+                        <IconButton
+                          variant="brand-primary"
+                          size="small"
+                          icon="FeatherFile"
+                          onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                            event.stopPropagation();
+                            onNavigate("temporal-flow-workflow");
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
