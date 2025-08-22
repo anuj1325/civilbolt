@@ -12,3 +12,4 @@ export interface Task {
   tags?: string[];
   color?: string;
 }
+

@@ -247,14 +247,14 @@ function ContractorActionHub({ onNavigate }: { onNavigate: (page: string) => voi
                     </span>
                   </div>
                 </div>
-                <div className="flex grow shrink-0 basis-0 items-center gap-4 self-stretch rounded-md border border-solid border-neutral-border bg-neutral-50 px-4 py-4 cursor-pointer">
+                <div className="flex grow shrink-0 basis-0 items-center gap-4 self-stretch rounded-md border border-solid border-neutral-border bg-neutral-50 px-4 py-4 cursor-pointer" onClick={() => onNavigate('editor')}>
                   <IconWithBackground size="large" icon="FeatherFileText" className="rounded-full flex h-12 w-12 flex-none items-center justify-center"/>
                   <div className="flex flex-col items-start gap-1">
                     <span className="text-body-bold font-body-bold text-default-font">
-                      Bid Evaluation
+                      Letter Drafting
                     </span>
                     <span className="text-caption font-caption text-subtext-color">
-                      Analyze and compare bids
+                      write a letter
                     </span>
                   </div>
                 </div>

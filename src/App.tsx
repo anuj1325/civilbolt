@@ -14,6 +14,7 @@ import Pre_BuiltTemplets from "./components/PrebuiltTemplets";
 import { WorkflowFlow } from "./components/WorkflowFlow";
 import TemporalFlowWorkflow from "./components/TemporalFlowWorkflow";
 import ProjectManagement from "./components/ProjectManagement";
+import Editor from "./pages/editor";
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -110,11 +111,16 @@ const AppContent: React.FC = () => {
             )
           }
         />
+        <Route
+          path="/editor"
+          element={<Editor onNavigate={handleNavigate} />}
+        />
         <Route path="/" element={<SignUpPage onNavigate={handleNavigate} />} />
       </Routes>
     </div>
+
   );
-};
+}
 
 const App: React.FC = () => {
   return (
