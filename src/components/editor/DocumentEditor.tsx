@@ -6,7 +6,7 @@ const DocumentEditor = () => {
   return (
     <div className="bg-white rounded-lg shadow-md">
       <div className="p-4 border-b">
-        <h3 className="text-lg font-medium">Document Editor</h3>
+        <h3 className="text-heading-2">Document Editor</h3>
       </div>
       <div className="p-4">
         <textarea

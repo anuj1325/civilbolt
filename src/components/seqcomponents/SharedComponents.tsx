@@ -12,7 +12,7 @@ export const PriorityBadge: React.FC<{ priority: Event['priority'] }> = ({ prior
   };
   
   return (
-    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${colors[priority]}`}>
+    <span className={`px-2 py-1 rounded-full text-body border ${colors[priority]}`}>
       {priority.toUpperCase()}
     </span>
   );
@@ -23,9 +23,9 @@ export const OverdueBadge: React.FC<{ isOverdue: boolean }> = ({ isOverdue }) =>
   if (!isOverdue) return null;
   
   return (
-    <div className="flex items-center space-x-1 text-red-600 text-xs">
+    <div className="flex items-center space-x-1 text-red-600 text-caption">
       <AlertTriangle size={12} />
-      <span className="font-medium">OVERDUE</span>
+      <span className="text-body">OVERDUE</span>
     </div>
   );
 };
@@ -47,7 +47,7 @@ export const SequenceStatusBadge: React.FC<{ status: SequenceOfEvents['status'] 
   };
   
   return (
-    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${colors[status]}`}>
+    <span className={`px-2 py-1 rounded-full text-body border ${colors[status]}`}>
       {labels[status]}
     </span>
   );
@@ -99,10 +99,10 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-gray-800">Generate Summary</h2>
+            <h2 className="text-heading-2 text-gray-800">Generate Summary</h2>
             <button 
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-2xl"
+              className="text-gray-500 hover:text-gray-700 text-heading-1"
             >
               ×
             </button>
@@ -110,15 +110,15 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
           
           {/* Letter Reference */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="font-semibold text-gray-800 mb-2">Reference Letter:</h3>
-            <p className="text-sm text-gray-600 mb-1">{letter.letterNo} - {letter.subject}</p>
-            <p className="text-xs text-gray-500">From: {letter.from} | Date: {new Date(letter.date).toLocaleDateString()}</p>
+            <h3 className="text-heading-3 text-gray-800 mb-2">Reference Letter:</h3>
+            <p className="text-body text-gray-600 mb-1">{letter.letterNo} - {letter.subject}</p>
+            <p className="text-caption text-gray-500">From: {letter.from} | Date: {new Date(letter.date).toLocaleDateString()}</p>
           </div>
           
           {/* Word Count Slider */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-3">
-              <label className="text-sm font-medium text-gray-700">Summary Length:</label>
+              <label className="text-body-bold text-gray-700">Summary Length:</label>
               <span className="text-sm font-semibold text-blue-600">{wordCount} words</span>
             </div>
             

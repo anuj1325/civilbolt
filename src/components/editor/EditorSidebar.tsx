@@ -35,7 +35,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
   return (
     <div className="flex flex-col items-center w-24">
       {/* Label row: icon + text */}
-      <span className={`mb-2 flex items-center gap-1 font-semibold text-sm ${config.colorText}`}>
+      <span className={`mb-2 flex items-center gap-1 text-heading-3 text-body ${config.colorText}`}>
         <span className="rounded-full bg-gray-100 p-1">{config.icon}</span>
         {label}
       </span>
@@ -47,7 +47,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
         />
       </div>
       {/* Score number */}
-      <span className={`mt-1 ${config.colorText} font-bold text-base`}>{score}</span>
+      <span className={`mt-1 ${config.colorText} text-heading-3 text-base`}>{score}</span>
     </div>
   );
 };
@@ -143,7 +143,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setSidebarTab("score")}
-            className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 ${
+            className={`flex-1 py-3 text-body text-body-bold transition-colors border-b-2 ${
               sidebarTab === "score"
                 ? "border-blue-600 text-blue-600 bg-white"
                 : "border-transparent text-gray-500 hover:text-blue-600"
@@ -153,7 +153,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
           </button>
           <button
             onClick={() => setSidebarTab("citations")}
-            className={`flex-1 py-3 text-sm font-medium transition-colors border-b-2 ${
+            className={`flex-1 py-3 text-body text-body-bold transition-colors border-b-2 ${
               sidebarTab === "citations"
                 ? "border-blue-600 text-blue-600 bg-white"
                 : "border-transparent text-gray-500 hover:text-blue-600"
@@ -178,10 +178,10 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             {/* Letter References Section */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-gray-800">Letter References</h3>
+                <h3 className="text-heading-3 text-gray-800">Letter References</h3>
                 <button
                   onClick={() => setShowReferenceModal(true)}
-                  className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white text-body rounded hover:bg-blue-600 transition-colors"
                 >
                   <Plus size={14} />
                   Add Reference
@@ -195,15 +195,15 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-sm font-medium text-blue-600">{letter.letterNo}</span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-body text-body-bold text-blue-600">{letter.letterNo}</span>
+                            <span className="text-caption text-gray-500">
                               {new Date(letter.date).toLocaleDateString()}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-700 truncate" title={letter.subject}>
+                          <p className="text-body text-gray-700 truncate" title={letter.subject}>
                             {letter.subject}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-caption text-gray-500 mt-1">
                             {letter.from} → {letter.to}
                           </p>
                         </div>
@@ -219,7 +219,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className="text-body text-gray-500">
                   No letter references added yet.
                 </p>
               )}
@@ -227,15 +227,15 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
 
             {/* Legal Citations Section */}
             <div>
-              <h3 className="font-semibold text-gray-800 mb-2">Legal Citations</h3>
+              <h3 className="text-heading-3 text-gray-800 mb-2">Legal Citations</h3>
               {citations.length > 0 ? (
-                <ul className="list-disc ml-6 text-sm text-gray-700 space-y-1">
+                <ul className="list-disc ml-6 text-body text-gray-700 space-y-1">
                   {citations.map((cite, idx) => (
                     <li key={idx}>{cite}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm text-gray-500">
+                <p className="text-body text-gray-500">
                   No legal citations found in the draft.
                 </p>
               )}
@@ -250,7 +250,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
           <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] overflow-hidden">
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-800">Add Letter Reference</h2>
+                <h2 className="text-heading-2 text-heading-3 text-gray-800">Add Letter Reference</h2>
                 <button
                   onClick={closeModal}
                   className="text-gray-500 hover:text-gray-700"
@@ -279,14 +279,14 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                   <div className="flex items-center gap-3">
                     <button
                       onClick={handleSelectAll}
-                      className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      className="text-body text-blue-600 hover:text-blue-700 text-body-bold"
                     >
                       {selectedLetterIds.size === filteredLetters.filter(letter => !referencedLetters.some(ref => ref.id === letter.id)).length 
                         ? 'Deselect All' 
                         : 'Select All'}
                     </button>
                     {selectedLetterIds.size > 0 && (
-                      <span className="text-sm text-gray-600">
+                      <span className="text-body text-gray-600">
                         {selectedLetterIds.size} selected
                       </span>
                     )}
@@ -294,7 +294,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                   {selectedLetterIds.size > 0 && (
                     <button
                       onClick={handleAddSelected}
-                      className="px-4 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition-colors"
+                      className="px-4 py-1 bg-blue-500 text-white text-body rounded hover:bg-blue-600 transition-colors"
                     >
                       Add Selected ({selectedLetterIds.size})
                     </button>
@@ -342,23 +342,23 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                           
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-sm font-medium text-blue-600">{letter.letterNo}</span>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-body text-body-bold text-blue-600">{letter.letterNo}</span>
+                              <span className="text-caption text-gray-500">
                                 {new Date(letter.date).toLocaleDateString()}
                               </span>
                               {isAlreadyReferenced && (
-                                <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">
+                                <span className="text-caption bg-gray-200 text-gray-600 px-2 py-1 rounded">
                                   Already Referenced
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-gray-700 mb-1" title={letter.subject}>
+                            <p className="text-body text-gray-700 mb-1" title={letter.subject}>
                               {letter.subject}
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-caption text-gray-500">
                               {letter.from} → {letter.to}
                             </p>
-                            <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                            <p className="text-caption text-gray-600 mt-1 line-clamp-2">
                               {letter.description}
                             </p>
                           </div>

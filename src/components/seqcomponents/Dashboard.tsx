@@ -106,16 +106,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
   return (
     <div className="p-6">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-2">Project Sequence Dashboard</h1>
-        <p className="text-gray-600">Track project milestones and sequence of events from pre-contract to closure</p>
+        <h1 className="text-heading-3 text-gray-800 mb-2">Project Sequence Dashboard</h1>
+        <p className="text-gray-700">Track project milestones and sequence of events from pre-contract to closure</p>
       </div>
       
       {/* Stats Grid - Multi-column layout with less space */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         {stats.map((stat, index) => (
           <div key={index} className="bg-white rounded-lg shadow-md p-4">
-            <div className={`text-xl font-bold text-${stat.color}-600 mb-1`}>{stat.value}</div>
-            <div className="text-gray-600 text-xs">{stat.label}</div>
+            <div className={`text-heading-2 text-${stat.color}-600 mb-1`}>{stat.value}</div>
+            <div className="text-gray-600 text-caption">{stat.label}</div>
           </div>
         ))}
       </div>
@@ -124,28 +124,28 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
       <div className="mb-8 flex space-x-2">
         <button 
           onClick={() => onNavigate('timeline')}
-          className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors text-sm font-medium"
+          className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors text-body-bold"
         >
           View Timeline
         </button>
         
         <button 
           onClick={() => onNavigate('table')}
-          className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors text-sm font-medium"
+          className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors text-body-bold"
         >
           Table View
         </button>
         
         <button 
           onClick={() => onNavigate('drafting')}
-          className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors text-sm font-medium"
+          className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors text-body-bold"
         >
           Drafting Tool
         </button>
         
         <button 
           onClick={() => onNavigate('draft-management')}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition-colors text-sm font-medium"
+          className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition-colors text-body-bold"
         >
           Draft Management
         </button>
@@ -154,7 +154,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
       {/* Sequence Of Events with Search */}
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">Sequence Of Events</h2>
+          <h2 className="text-heading-2 text-gray-800">Sequence Of Events</h2>
           {/* Search Bar */}
           <div className="flex items-center bg-white rounded-full shadow-md hover:shadow-lg transition-shadow border border-gray-200 max-w-2xl">
             <input
@@ -162,9 +162,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
               placeholder="Search sequences, phases, or descriptions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 px-6 py-3 rounded-l-full focus:outline-none text-gray-700 text-lg"
+              className="flex-1 px-6 py-3 rounded-l-full focus:outline-none text-gray-700 text-body-bold"
             />
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 transition-colors text-lg font-medium">
+            <button className="px-6 py-3 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 transition-colors text-body-bold">
               Search
             </button>
           </div>

@@ -47,8 +47,8 @@ const CompactLetterCard: React.FC<{
         <div className="p-4">
           <div className="flex justify-between items-start">
             <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-gray-800 text-sm truncate">{letter.subject}</h3>
-              <p className="text-xs text-gray-500 mt-1">{letter.letterNo}</p>
+              <h3 className="text-body-bold text-gray-800 truncate">{letter.subject}</h3>
+              <p className="text-caption text-gray-700 mt-1">{letter.letterNo}</p>
             </div>
             <div className="flex flex-col items-end space-y-1 ml-2">
               <PriorityBadge priority={letter.priority} />
@@ -62,7 +62,7 @@ const CompactLetterCard: React.FC<{
           <div className="absolute top-full left-0 right-0 bg-white border border-t-0 rounded-b-lg shadow-lg z-20 px-4 pb-4 border-t border-gray-100">
             <div className="space-y-3 pt-3">
               {/* Date and From info */}
-              <div className="flex items-center space-x-4 text-xs text-gray-600">
+              <div className="flex items-center space-x-4 text-caption text-gray-600">
                 <div className="flex items-center space-x-1">
                   <Calendar size={12} />
                   <span>{new Date(letter.date).toLocaleDateString()}</span>
@@ -77,19 +77,19 @@ const CompactLetterCard: React.FC<{
 
               {/* Description */}
               <div>
-                <p className="text-xs text-gray-600 leading-relaxed">
+                <p className="text-caption text-gray-600 leading-relaxed">
                   {letter.description}
                 </p>
               </div>
 
               {/* Assignee */}
-              <div className="text-xs text-gray-500">
+              <div className="text-caption text-gray-500">
                 <strong>Assignee:</strong> {letter.assignee}
               </div>
 
               {/* Contract deadline */}
               {letter.contractDeadline && (
-                <div className="text-xs text-gray-500">
+                <div className="text-caption text-gray-500">
                   <strong>Contract Deadline:</strong> {new Date(letter.contractDeadline).toLocaleDateString()}
                 </div>
               )}
@@ -97,7 +97,7 @@ const CompactLetterCard: React.FC<{
               {/* Attachments */}
               {letter.attachments.length > 0 && (
                 <div>
-                  <h4 className="text-xs font-semibold text-gray-700 mb-2 flex items-center">
+                  <h4 className="text-caption-bold text-gray-700 mb-2 flex items-center">
                     <FileText size={12} className="mr-1" />
                     Attachments ({letter.attachments.length})
                   </h4>
@@ -106,11 +106,11 @@ const CompactLetterCard: React.FC<{
                       <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded border">
                         <div className="flex items-center space-x-2 flex-1 min-w-0"> 
                           <Paperclip size={10} className="text-gray-400 flex-shrink-0" />
-                          <span className="text-xs text-gray-700 truncate">{attachment}</span>
+                          <span className="text-caption text-gray-700 truncate">{attachment}</span>
                         </div>
                         <div className="flex space-x-1 ml-2">
                           <button 
-                            className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                            className="text-caption bg-blue-100 text-blue-600 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
                             onClick={(e) => {
                               e.stopPropagation();
                               console.log('View file:', attachment);
@@ -126,10 +126,10 @@ const CompactLetterCard: React.FC<{
               )}
 
               {/* Status info */}
-              <div className="grid grid-cols-1 gap-2 text-xs pt-2 border-t border-gray-100">
+              <div className="grid grid-cols-1 gap-2 text-caption pt-2 border-t border-gray-100">
                 <div>
-                  <span className="font-semibold text-gray-700">Status: </span>
-                  <span className={`px-2 py-1 rounded text-xs ${
+                  <span className="text-caption-bold text-gray-700">Status: </span>
+                  <span className={`px-2 py-1 rounded text-caption ${
                     letter.status === 'completed' ? 'bg-green-100 text-green-800' :
                     letter.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
                     letter.status === 'overdue' ? 'bg-red-100 text-red-800' :
@@ -142,7 +142,7 @@ const CompactLetterCard: React.FC<{
 
               {/* Timestamps */}
               {(letter.createdAt || letter.updatedAt) && (
-                <div className="text-xs text-gray-500 pt-2 border-t border-gray-100">
+                <div className="text-caption text-gray-500 pt-2 border-t border-gray-100">
                   {letter.createdAt && <div>Created: {new Date(letter.createdAt).toLocaleString()}</div>}
                   {letter.updatedAt && <div>Updated: {new Date(letter.updatedAt).toLocaleString()}</div>}
                 </div>
@@ -156,7 +156,7 @@ const CompactLetterCard: React.FC<{
                       e.stopPropagation();
                       onGenerateSummary?.(letter);
                     }}
-                    className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-xs font-medium hover:bg-blue-700 transition-colors"
+                    className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-caption-bold hover:bg-blue-700 transition-colors"
                     title="Generate summary of this letter"
                   >
                     Generate Summary
@@ -166,7 +166,7 @@ const CompactLetterCard: React.FC<{
                       e.stopPropagation();
                       onDraftLetter?.(letter);
                     }}
-                    className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-xs font-medium hover:bg-green-700 transition-colors"
+                    className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-caption-bold hover:bg-green-700 transition-colors"
                     title="Draft a response letter"
                   >
                     Draft Reply

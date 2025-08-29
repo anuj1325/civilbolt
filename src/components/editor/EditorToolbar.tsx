@@ -27,7 +27,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <select
             value={currentFont}
             onChange={(e) => formatText('fontName', e.target.value)}
-            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-sm bg-white appearance-none cursor-pointer min-w-[140px] text-gray-600"
+            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-body bg-white appearance-none cursor-pointer min-w-[140px] text-gray-600"
           >
             <option value="">Select font</option>
             {fonts.map(font => (
@@ -44,7 +44,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <select
             value={currentSize}
             onChange={(e) => formatText('fontSize', e.target.value)}
-            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-sm bg-white appearance-none cursor-pointer min-w-[80px] text-gray-600"
+            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-body bg-white appearance-none cursor-pointer min-w-[80px] text-gray-600"
           >
             <option value="">Size</option>
             {textSizes.map(size => (
@@ -61,7 +61,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <select
             value={currentLineSpacing}
             onChange={(e) => formatText('lineHeight', e.target.value)}
-            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-sm bg-white appearance-none cursor-pointer min-w-[120px] text-gray-600"
+            className="px-3 py-2 pr-8 border border-gray-300 rounded-md text-body bg-white appearance-none cursor-pointer min-w-[120px] text-gray-600"
           >
             <option value="">Line Spacing</option>
             {lineSpacings.map(spacing => (
@@ -77,7 +77,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <div className="flex items-center gap-1">
           <button
             onClick={() => formatText('bold')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 font-bold transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-heading-3 transition-colors"
             title="Bold"
           >
             B
@@ -123,28 +123,28 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <div className="flex items-center gap-1">
           <button
             onClick={() => formatText('heading', 'h1')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-sm font-medium transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-body text-body-bold transition-colors"
             title="Heading 1"
           >
             H1
           </button>
           <button
             onClick={() => formatText('heading', 'h2')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-sm font-medium transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-body text-body-bold transition-colors"
             title="Heading 2"
           >
             H2
           </button>
           <button
             onClick={() => formatText('heading', 'h3')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-sm font-medium transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-body text-body-bold transition-colors"
             title="Heading 3"
           >
             H3
           </button>
           <button
             onClick={() => formatText('heading', 'h4')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-sm font-medium transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-body text-body-bold transition-colors"
             title="Heading 4"
           >
             H4
@@ -169,14 +169,14 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           </button>
           <button
             onClick={() => formatText('superscript')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-xs transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-caption transition-colors"
             title="Superscript"
           >
             X²
           </button>
           <button
             onClick={() => formatText('subscript')}
-            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-xs transition-colors"
+            className="w-9 h-9 rounded border border-gray-300 hover:bg-gray-50 flex items-center justify-center text-gray-700 text-caption transition-colors"
             title="Subscript"
           >
             X₂
@@ -241,7 +241,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <div className="ml-auto">
           <button 
             onClick={onSave}
-            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center gap-2 font-medium transition-colors"
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center gap-2 text-body-bold transition-colors"
           >
             <Save className="w-4 h-4" />
             Save

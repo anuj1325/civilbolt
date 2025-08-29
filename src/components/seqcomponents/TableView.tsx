@@ -307,38 +307,38 @@ export const TableView: React.FC<TableViewProps> = ({
         );
       
       case 'sno':
-        return <span className="text-sm text-gray-900">{index + 1}</span>;
+        return <span className="text-body text-gray-900">{index + 1}</span>;
       
       case 'from':
         return (
-          <span className={`px-2 py-1 text-xs rounded ${letter.from === 'Contractor' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
+          <span className={`px-2 py-1 text-caption rounded ${letter.from === 'Contractor' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
             {letter.from}
           </span>
         );
       
       case 'to':
         return (
-          <span className={`px-2 py-1 text-xs rounded ${letter.to === 'Contractor' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
+          <span className={`px-2 py-1 text-caption rounded ${letter.to === 'Contractor' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}>
             {letter.to}
           </span>
         );
       
       case 'date':
-        return <span className="text-sm text-gray-900">{new Date(letter.date).toLocaleDateString()}</span>;
+        return <span className="text-body text-gray-900">{new Date(letter.date).toLocaleDateString()}</span>;
       
       case 'letterNo':
-        return <span className="text-sm font-medium text-gray-900">{letter.letterNo}</span>;
+        return <span className="text-body-bold text-gray-900">{letter.letterNo}</span>;
       
       case 'subject':
         return (
-          <div className="text-sm text-gray-900 max-w-xs truncate" title={letter.subject}>
+          <div className="text-body text-gray-900 max-w-xs truncate" title={letter.subject}>
             {letter.subject}
           </div>
         );
       
       case 'description':
         return (
-          <div className="text-sm text-gray-900 max-w-sm truncate" title={letter.description}>
+          <div className="text-body text-gray-900 max-w-sm truncate" title={letter.description}>
             {letter.description}
           </div>
         );
@@ -350,13 +350,13 @@ export const TableView: React.FC<TableViewProps> = ({
         return <OverdueBadge isOverdue={letter.isOverdue || false} />;
       
       case 'assignee':
-        return <span className="text-sm text-gray-900">{letter.assignee}</span>;
+        return <span className="text-body text-gray-900">{letter.assignee}</span>;
       
       case 'attachments':
         return (
           <div className="flex items-center space-x-1">
             <FileText size={14} className="text-gray-400" />
-            <span className="text-xs text-gray-600">
+            <span className="text-caption text-gray-600">
               {letter.attachments.length} file{letter.attachments.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -364,21 +364,21 @@ export const TableView: React.FC<TableViewProps> = ({
       
       case 'contractDeadline':
         return (
-          <span className="text-sm text-gray-900">
+          <span className="text-body text-gray-900">
             {letter.contractDeadline ? new Date(letter.contractDeadline).toLocaleDateString() : '-'}
           </span>
         );
       
       case 'createdAt':
         return (
-          <span className="text-sm text-gray-900">
+          <span className="text-body text-gray-900">
             {letter.createdAt ? new Date(letter.createdAt).toLocaleDateString() : '-'}
           </span>
         );
       
       case 'updatedAt':
         return (
-          <span className="text-sm text-gray-900">
+          <span className="text-body text-gray-900">
             {letter.updatedAt ? new Date(letter.updatedAt).toLocaleDateString() : '-'}
           </span>
         );
@@ -391,7 +391,7 @@ export const TableView: React.FC<TableViewProps> = ({
                 e.stopPropagation();
                 onGenerateSummary?.(letter);
               }}
-              className="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
+              className="px-3 py-1 bg-blue-500 text-white text-caption rounded hover:bg-blue-600 transition-colors"
               title="Generate Summary"
             >
               Summary
@@ -401,7 +401,7 @@ export const TableView: React.FC<TableViewProps> = ({
                 e.stopPropagation();
                 onDraftLetter?.(letter);
               }}
-              className="px-3 py-1 bg-green-500 text-white text-xs rounded hover:bg-green-600 transition-colors"
+              className="px-3 py-1 bg-green-500 text-white text-caption rounded hover:bg-green-600 transition-colors"
               title="Draft Reply Letter"
             >
               Draft
@@ -420,7 +420,7 @@ export const TableView: React.FC<TableViewProps> = ({
         {/* Header Section */}
         <div className="p-4 bg-gray-50 border-b border-gray-200">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">
+            <h3 className="text-heading-3 text-gray-800">
               {selectedSequence ? `Letters for Sequence: ${selectedSequence.sequenceTitle}` : 
                selectedEvent ? `Letters for: ${selectedEvent.eventTitle}` : 'All Letters'}
             </h3>
@@ -429,7 +429,7 @@ export const TableView: React.FC<TableViewProps> = ({
               {/* Filter Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center space-x-2 px-3 py-2 text-sm rounded-lg transition-colors ${
+                className={`flex items-center space-x-2 px-3 py-2 text-body rounded-lg transition-colors ${
                   showFilters ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
@@ -508,7 +508,7 @@ export const TableView: React.FC<TableViewProps> = ({
             <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-auto">
               <div className="p-4 border-b border-gray-200">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-lg font-semibold text-gray-900">Column Configuration</h4>
+                  <h4 className="text-lg text-heading-3 text-gray-900">Column Configuration</h4>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={resetToDefaults}
@@ -537,7 +537,7 @@ export const TableView: React.FC<TableViewProps> = ({
                         disabled={column.required}
                         className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 disabled:opacity-50"
                       />
-                      <span className={`${column.required ? 'text-gray-500' : 'text-gray-900'} ${column.visible ? 'font-medium' : ''}`}>
+                      <span className={`${column.required ? 'text-gray-500' : 'text-gray-900'} ${column.visible ? 'text-body-bold' : ''}`}>
                         {column.label}
                         {column.required && <span className="text-xs ml-1">(required)</span>}
                       </span>
@@ -560,7 +560,7 @@ export const TableView: React.FC<TableViewProps> = ({
             <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-auto">
               <div className="p-4 border-b border-gray-200">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-lg font-semibold text-gray-900">Filters</h4>
+                  <h4 className="text-lg text-heading-3 text-gray-900">Filters</h4>
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={clearFilters}
@@ -582,7 +582,7 @@ export const TableView: React.FC<TableViewProps> = ({
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {/* Priority Filter */}
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">Priority</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">Priority</label>
                     <div className="space-y-1">
                       {['high', 'medium', 'low'].map((priority) => (
                         <label key={priority} className="flex items-center space-x-2 text-sm">
@@ -605,7 +605,7 @@ export const TableView: React.FC<TableViewProps> = ({
 
                   {/* Status Filter */}
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">Status</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">Status</label>
                     <div className="space-y-1">
                       {['normal', 'overdue'].map((status) => (
                         <label key={status} className="flex items-center space-x-2 text-sm">
@@ -628,7 +628,7 @@ export const TableView: React.FC<TableViewProps> = ({
 
                   {/* From Filter */}
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">From</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">From</label>
                     <div className="space-y-1">
                       {getUniqueValues('from').map((from) => (
                         <label key={from} className="flex items-center space-x-2 text-sm">
@@ -651,7 +651,7 @@ export const TableView: React.FC<TableViewProps> = ({
 
                   {/* To Filter */}
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">To</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">To</label>
                     <div className="space-y-1">
                       {getUniqueValues('to').map((to) => (
                         <label key={to} className="flex items-center space-x-2 text-sm">
@@ -676,7 +676,7 @@ export const TableView: React.FC<TableViewProps> = ({
                 {/* Date Range Filter */}
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">From Date</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">From Date</label>
                     <input
                       type="date"
                       value={filters.dateRange.start}
@@ -685,7 +685,7 @@ export const TableView: React.FC<TableViewProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-900 mb-2">To Date</label>
+                    <label className="block text-xs text-body-bold text-gray-900 mb-2">To Date</label>
                     <input
                       type="date"
                       value={filters.dateRange.end}
@@ -703,7 +703,7 @@ export const TableView: React.FC<TableViewProps> = ({
         {selectedLetters.size > 0 && (
           <div className="p-4 bg-yellow-50 border-b border-yellow-200 flex justify-between items-center">
             <div className="text-sm text-yellow-800">
-              <span className="font-semibold">{selectedLetters.size}</span> letter{selectedLetters.size !== 1 ? 's' : ''} selected
+              <span className="text-heading-3">{selectedLetters.size}</span> letter{selectedLetters.size !== 1 ? 's' : ''} selected
             </div>
             <button
               onClick={handleDraftWithSelected}
@@ -722,7 +722,7 @@ export const TableView: React.FC<TableViewProps> = ({
                 {visibleColumns.map((column) => (
                   <th 
                     key={column.key} 
-                    className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${column.width || ''} ${
+                    className={`px-6 py-3 text-left text-xs text-body-bold text-gray-500 uppercase tracking-wider ${column.width || ''} ${
                       column.sortable ? 'cursor-pointer hover:bg-gray-100' : ''
                     }`}
                     onClick={() => column.sortable && handleSort(column.key)}

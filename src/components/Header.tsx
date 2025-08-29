@@ -37,7 +37,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onViewChange, onAddTask })
             <button
               key={view}
               onClick={() => onViewChange(view)}
-              className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
+              className={`flex items-center space-x-2 px-3 py-2 rounded-md text-body-bold transition-colors whitespace-nowrap ${
                 currentView === view
                   ? 'bg-white text-blue-600 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'

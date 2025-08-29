@@ -70,7 +70,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full m-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-heading-2 text-gray-900">
             {task ? 'Edit Task' : 'Create New Task'}
           </h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
@@ -80,7 +80,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Task Title</label>
+            <label className="block text-body-bold text-gray-700 mb-2">Task Title</label>
             <input
               type="text"
               required
@@ -92,7 +92,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+            <label className="block text-body-bold text-gray-700 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -104,7 +104,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-body-bold text-gray-700 mb-2">Status</label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as Task['status'] })}
@@ -117,7 +117,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+              <label className="block text-body-bold text-gray-700 mb-2">Priority</label>
               <select
                 value={formData.priority}
                 onChange={(e) => setFormData({ ...formData, priority: e.target.value as Task['priority'] })}
@@ -133,7 +133,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+              <label className="block text-body-bold text-gray-700 mb-2">Start Date</label>
               <input
                 type="date"
                 value={formData.startDate.toISOString().split('T')[0]}
@@ -143,7 +143,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+              <label className="block text-body-bold text-gray-700 mb-2">End Date</label>
               <input
                 type="date"
                 value={formData.endDate.toISOString().split('T')[0]}
@@ -154,7 +154,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Assignee</label>
+            <label className="block text-body-bold text-gray-700 mb-2">Assignee</label>
             <input
               type="text"
               value={formData.assignee}
@@ -165,7 +165,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ isOpen, onClose, onSubmit, task }
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Task Color</label>
+            <label className="block text-body-bold text-gray-700 mb-2">Task Color</label>
             <div className="flex space-x-2">
               {['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#6B7280'].map((color) => (
                 <button

@@ -57,7 +57,7 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
       <div className="p-6">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-3xl font-bold text-gray-800">Draft Management</h1>
+            <h1 className="text-heading-1 text-gray-800">Draft Management</h1>
             <button
               onClick={() => onNavigate?.('drafting')}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -89,45 +89,45 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draft Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Draft Number</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Letter Reference</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">To</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Copy To</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Draft Name</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Description</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Subject</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Draft Number</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Letter Reference</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">To</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Copy To</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredDrafts.map((draft) => (
                   <tr key={draft.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{draft.draftName}</div>
-                      <div className="text-xs text-gray-500">Created: {new Date(draft.createdDate).toLocaleDateString()}</div>
+                      <div className="text-body-bold text-gray-900">{draft.draftName}</div>
+                      <div className="text-caption text-gray-500">Created: {new Date(draft.createdDate).toLocaleDateString()}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 max-w-xs truncate" title={draft.description}>
+                      <div className="text-body text-gray-900 max-w-xs truncate" title={draft.description}>
                         {draft.description}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 max-w-xs truncate" title={draft.subject}>
+                      <div className="text-body text-gray-900 max-w-xs truncate" title={draft.subject}>
                         {draft.subject}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
                       {draft.draftNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
                       {draft.letterInReference}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
                       {draft.to}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-body text-gray-900">
                         {draft.copyTo.length > 0 ? draft.copyTo.join(', ') : '-'}
                       </div>
                     </td>
@@ -135,14 +135,14 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
                       <select
                         value={draft.status}
                         onChange={(e) => handleStatusUpdate(draft.id, e.target.value as Draft['status'])}
-                        className={`text-xs px-2 py-1 rounded-full border-0 focus:ring-2 focus:ring-blue-500 ${getStatusBadgeColor(draft.status)}`}
+                        className={`text-caption px-2 py-1 rounded-full border-0 focus:ring-2 focus:ring-blue-500 ${getStatusBadgeColor(draft.status)}`}
                       >
                         {getStatusOptions(draft.status).map(status => (
                           <option key={status} value={status}>{status}</option>
                         ))}
                       </select>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-body-bold">
                       <div className="flex space-x-2">
                         <button
                           onClick={() => onEditDraft?.(draft.id)}

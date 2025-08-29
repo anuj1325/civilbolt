@@ -39,11 +39,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 text-red-700">
             <Bell size={14} />
-            <span className="font-semibold text-xs">{overdueEvents.length} Overdue</span>
+            <span className="text-caption-bold">{overdueEvents.length} Overdue</span>
           </div>
           <button 
             onClick={(e) => { e.stopPropagation(); onDismiss(); }}
-            className="text-red-500 hover:text-red-700 text-xs"
+            className="text-red-500 hover:text-red-700 text-caption"
           >
             ×
           </button>
@@ -57,41 +57,41 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center space-x-2 text-red-700">
           <Bell size={16} />
-          <span className="font-semibold text-sm">Action Required</span>
+          <span className="text-body-bold">Action Required</span>
         </div>
         <div className="flex items-center space-x-1">
           <button 
             onClick={onMinimize}
-            className="text-red-500 hover:text-red-700 text-sm p-1"
+            className="text-red-500 hover:text-red-700 text-body p-1"
             title="Minimize"
           >
             −
           </button>
           <button 
             onClick={onDismiss}
-            className="text-red-500 hover:text-red-700 text-sm p-1"
+            className="text-red-500 hover:text-red-700 text-body p-1"
             title="Dismiss"
           >
             ×
           </button>
         </div>
       </div>
-      <p className="text-xs text-red-600 mb-2">
+      <p className="text-caption text-red-600 mb-2">
         {overdueEvents.length} event(s) are overdue. Consider drafting follow-up letters to authorities.
       </p>
-      <div className="text-xs text-red-500 mb-2">
+      <div className="text-caption text-red-500 mb-2">
         Overdue items: {overdueEvents.map(e => e.letterNo).join(', ')}
       </div>
       <div className="flex space-x-2">
         <button 
           onClick={onDraftLetters}
-          className="text-xs bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+          className="text-caption bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
         >
           Draft Letters
         </button>
         <button 
           onClick={onDismiss}
-          className="text-xs bg-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-400"
+          className="text-caption bg-gray-300 text-gray-700 px-3 py-1 rounded hover:bg-gray-400"
         >
           Dismiss for now
         </button>
@@ -171,7 +171,7 @@ export const TimelineDashboard: React.FC<TimelineDashboardProps> = ({
           <div className="grid grid-cols-3 gap-4">
             {/* Title and Info Section */}
             <div className="col-span-2">
-              <h1 className="text-xl font-bold text-gray-800 mb-2">
+              <h1 className="text-heading-3 text-gray-800 mb-2">
                 {selectedSequence ? 'Sequence Letters & Communications' : 
                  selectedEvent ? 'Related Letters & Communications' : 'Sequence of Events'}
               </h1>
@@ -203,7 +203,7 @@ export const TimelineDashboard: React.FC<TimelineDashboardProps> = ({
                     <button
                       key={view.id}
                       onClick={() => setActiveView(view.id)}
-                      className={`px-2 py-1 rounded-md text-xs font-medium transition-all ${activeView === view.id ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
+                      className={`px-2 py-1 rounded-md text-body-bold transition-all ${activeView === view.id ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
                     >
                       {view.label}
                     </button>

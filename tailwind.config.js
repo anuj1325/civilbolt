@@ -7,3 +7,4 @@ export default {
   plugins: [],
   presets: [require("./src/ui/tailwind.config.js")]
 };
+

@@ -57,17 +57,17 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onClick, isDragging = false }
         <Flag className={`w-4 h-4 ${priorityColors[task.priority]}`} />
       </div>
 
-      <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2">
+      <h3 className="text-body-bold text-gray-900 mb-2 line-clamp-2">
         {task.title}
       </h3>
 
       {task.description && (
-        <p className="text-xs text-gray-600 mb-3 line-clamp-2">
+        <p className="text-caption text-gray-600 mb-3 line-clamp-2">
           {task.description}
         </p>
       )}
 
-      <div className="flex items-center justify-between text-xs text-gray-500">
+      <div className="flex items-center justify-between text-caption text-gray-500">
         <div className="flex items-center space-x-1">
           <Calendar className="w-3 h-3" />
           <span>{formatDate(task.endDate)}</span>
@@ -76,7 +76,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onClick, isDragging = false }
         {task.assignee && (
           <div className="flex items-center space-x-1">
             <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-              <span className="text-xs font-medium text-white">
+              <span className="text-caption-bold text-white">
                 {task.assignee.charAt(0).toUpperCase()}
               </span>
             </div>
