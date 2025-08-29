@@ -51,25 +51,25 @@ const DefaultPageLayoutRoot = React.forwardRef<
         expanded={isSidebarExpanded}
         header={
           <div className="flex w-full flex-col items-start gap-2">
-            <div className="flex w-full items-center gap-2">
-              <img
-                className="h-6 w-6 flex-none object-cover"
-                src="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/y2rsnhq3mex4auk54aye.png"
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center gap-2">
+                <img
+                  className="h-6 w-6 flex-none object-cover"
+                  src="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/y2rsnhq3mex4auk54aye.png"
+                />
+                {isSidebarExpanded ? (
+                  <span className="text-heading-3 font-heading-3 text-default-font">
+                    Bolt
+                  </span>
+                ) : null}
+              </div>
+              <Button
+                variant="neutral-secondary"
+                size="small"
+                icon={isSidebarExpanded ? "FeatherChevronsLeft" : "FeatherChevronsRight"}
+                onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
               />
-              {isSidebarExpanded ? (
-                <span className="text-heading-3 font-heading-3 text-default-font">
-                  Bolt
-                </span>
-              ) : null}
             </div>
-            <Button
-              variant="neutral-secondary"
-              size="small"
-              iconRight="FeatherChevronsLeft"
-              onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
-            >
-              {isSidebarExpanded ? <span>Collapse</span> : null}
-            </Button>
           </div>
     }
         footer={
@@ -139,7 +139,7 @@ const DefaultPageLayoutRoot = React.forwardRef<
                 <div className="flex w-full cursor-pointer items-center gap-2 rounded-md border border-solid border-neutral-border p-2">
                   <Avatar
                     size="small"
-                    image="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/fychrij7dzl8wgq2zjq9.avif"
+                    image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   >
                     A
                   </Avatar>

@@ -585,7 +585,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
         </Avatar>
       </div>
     </div>
-    <div className="min-h-screen bg-gray-50">
+    <div className="h-full w-full flex-col">
       <div className="flex relative" style={{height: '100vh', overflow: 'hidden'}}>
         <div 
           className="flex-shrink-0 p-6 relative" 

@@ -104,7 +104,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
   ];
   
   return (
-    <div className="p-6">
+    <div className="p-2">
       <div className="mb-8">
         <h1 className="text-heading-3 text-gray-800 mb-2">Project Sequence Dashboard</h1>
         <p className="text-gray-700">Track project milestones and sequence of events from pre-contract to closure</p>
@@ -120,41 +120,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
         ))}
       </div>
       
-      {/* Quick Actions as Pills */}
-      <div className="mb-8 flex space-x-2">
-        <button 
-          onClick={() => onNavigate('timeline')}
-          className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors text-body-bold"
-        >
-          View Timeline
-        </button>
-        
-        <button 
-          onClick={() => onNavigate('table')}
-          className="bg-green-600 text-white px-4 py-2 rounded-full hover:bg-green-700 transition-colors text-body-bold"
-        >
-          Table View
-        </button>
-        
-        <button 
-          onClick={() => onNavigate('drafting')}
-          className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 transition-colors text-body-bold"
-        >
-          Drafting Tool
-        </button>
-        
-        <button 
-          onClick={() => onNavigate('draft-management')}
-          className="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition-colors text-body-bold"
-        >
-          Draft Management
-        </button>
-      </div>
       
       {/* Sequence Of Events with Search */}
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-heading-2 text-gray-800">Sequence Of Events</h2>
+          <h2 className="text-heading-3 text-gray-800">Sequence Of Events</h2>
           {/* Search Bar */}
           <div className="flex items-center bg-white rounded-full shadow-md hover:shadow-lg transition-shadow border border-gray-200 max-w-2xl">
             <input

@@ -209,34 +209,45 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
         </div>
 
         {/* Column Settings Toggle */}
-        <button
-          onClick={() => setConfig({ ...config, showColumnSettings: !config.showColumnSettings })}
-          className="flex items-center space-x-2 px-3 py-2 border rounded-md hover:bg-gray-50"
-        >
-          <Settings size={16} />
-          <span className="text-sm">Columns</span>
-        </button>
-      </div>
+        <div className="relative">
+          <button
+            onClick={() => setConfig({ ...config, showColumnSettings: !config.showColumnSettings })}
+            className="flex items-center space-x-2 px-3 py-2 border rounded-md hover:bg-gray-50"
+          >
+            <Settings size={16} />
+            <span className="text-sm">Columns</span>
+          </button>
 
-      {/* Column Settings Panel */}
-      {config.showColumnSettings && (
-        <div className="bg-gray-50 p-4 rounded-md border">
-          <h4 className="font-medium mb-3">Configure Columns</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {config.columns.map(column => (
-              <label key={String(column.key)} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={column.visible !== false}
-                  onChange={() => toggleColumnVisibility(String(column.key))}
-                  className="rounded"
-                />
-                <span className="text-sm">{column.header}</span>
-              </label>
-            ))}
-          </div>
+          {/* Column Settings Dropdown Overlay */}
+          {config.showColumnSettings && (
+            <>
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 z-40"
+                onClick={() => setConfig({ ...config, showColumnSettings: false })}
+              />
+              
+              {/* Dropdown Panel */}
+              <div className="absolute right-0 top-full mt-2 z-50 bg-gray-50 p-4 rounded-md border shadow-lg min-w-80">
+                <h4 className="font-medium mb-3">Configure Columns</h4>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                  {config.columns.map(column => (
+                    <label key={String(column.key)} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={column.visible !== false}
+                        onChange={() => toggleColumnVisibility(String(column.key))}
+                        className="rounded"
+                      />
+                      <span className="text-sm">{column.header}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Table */}
       <Table>
