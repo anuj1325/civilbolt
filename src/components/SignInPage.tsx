@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { IconWithBackground } from "@/ui/components/IconWithBackground";
 import { LinkButton } from "@/ui/components/LinkButton";
 import { TextField } from "@/ui/components/TextField";
@@ -8,7 +7,6 @@ import { OAuthSocialButton } from "@/ui/components/OAuthSocialButton";
 import { useNavigate } from "react-router-dom";
 
 function SignInPage({ onNavigate }: { onNavigate: (page: string) => void }) {
-  const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -22,55 +20,24 @@ function SignInPage({ onNavigate }: { onNavigate: (page: string) => void }) {
     }));
   };
 
-  const handleSignIn = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Sign-in error:", error);
-    }
+  const handleSignIn = () => {
+    navigate('/contractor-hub');
   };
 
   const handleSignUp = () => {
     onNavigate('signup');
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          connection: "google-oauth2",
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Google sign-in error:", error);
-    }
+  const handleGoogleSignIn = () => {
+    navigate('/contractor-hub');
   };
 
-  const handleAppleSignIn = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          connection: "apple",
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Apple sign-in error:", error);
-    }
+  const handleAppleSignIn = () => {
+    navigate('/contractor-hub');
   };
 
   const handleForgotPassword = () => {
-    loginWithRedirect({
-      authorizationParams: {
-        screen_hint: "forgot-password",
-        redirect_uri: `${window.location.origin}/contractor-hub`,
-      },
-    });
+    console.log('Forgot password clicked');
   };
 
   return (

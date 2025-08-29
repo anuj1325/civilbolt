@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,12 +14,10 @@ import { WorkflowFlow } from "./components/WorkflowFlow";
 import TemporalFlowWorkflow from "./components/TemporalFlowWorkflow";
 import ProjectManagement from "./components/ProjectManagement";
 import SequenceOfEvent from "./components/SequenceOfEvent";
-import Editor from "./pages/editor";
-import {TableView} from "./components/seqcomponents/TableView";
+import Editor from "./pages/editor"
 import CorrespondingLettersPage from "./components/CorrespondingLettersPage";
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth0();
   const navigate = useNavigate();
   const [selectedProject, setSelectedProject] =
     useState<string>("Highway Extension");
@@ -33,9 +30,6 @@ const AppContent: React.FC = () => {
     setSelectedProject(projectName);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="w-full h-screen">
@@ -50,69 +44,37 @@ const AppContent: React.FC = () => {
         />
         <Route
           path="/contractor-hub"
-          element={
-            isAuthenticated ? (
-              <ContractorActionHub onNavigate={handleNavigate} />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<ContractorActionHub onNavigate={handleNavigate} />}
         />
         <Route
           path="/select-existing-project"
           element={
-            isAuthenticated ? (
-              <SelectExistingProject
-                onNavigate={handleNavigate}
-                onSelectProject={handleSelectProject}
-              />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
+            <SelectExistingProject
+              onNavigate={handleNavigate}
+              onSelectProject={handleSelectProject}
+            />
           }
         />
         <Route
           path="/pre-built-templets"
           element={
-            isAuthenticated ? (
-              <Pre_BuiltTemplets
-                onNavigate={handleNavigate}
-                selectedProject={selectedProject}
-              />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
+            <Pre_BuiltTemplets
+              onNavigate={handleNavigate}
+              selectedProject={selectedProject}
+            />
           }
         />
         <Route
           path="/workflow"
-          element={
-            isAuthenticated ? (
-              <WorkflowFlow selectedProject={selectedProject} />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<WorkflowFlow selectedProject={selectedProject} />}
         />
         <Route
           path="/temporal-flow-workflow"
-          element={
-            isAuthenticated ? (
-              <TemporalFlowWorkflow selectedProject={selectedProject} />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<TemporalFlowWorkflow selectedProject={selectedProject} />}
         />
         <Route
           path="/project-management"
-          element={
-            isAuthenticated ? (
-              <ProjectManagement />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<ProjectManagement />}
         />
         <Route
           path="/editor"
@@ -120,23 +82,11 @@ const AppContent: React.FC = () => {
         />
         <Route
           path="/sequence-of-event"
-          element={
-            isAuthenticated ? (
-              <SequenceOfEvent onNavigate={handleNavigate} />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<SequenceOfEvent onNavigate={handleNavigate} />}
         />
         <Route
           path="/corresponding-letters"
-          element={
-            isAuthenticated ? (
-              <CorrespondingLettersPage />
-            ) : (
-              <SignInPage onNavigate={handleNavigate} />
-            )
-          }
+          element={<CorrespondingLettersPage />}
         />
         <Route path="/" element={<SignUpPage onNavigate={handleNavigate} />} />
       </Routes>
@@ -147,19 +97,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Auth0Provider
-      domain={import.meta.env.VITE_AUTH0_DOMAIN || ""}
-      clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || ""}
-      authorizationParams={{
-        redirect_uri: import.meta.env.PROD
-          ? `${window.location.origin}/contractor-hub`
-          : window.location.origin,
-      }}
-    >
-      <Router>
-        <AppContent />
-      </Router>
-    </Auth0Provider>
+    <Router>
+      <AppContent />
+    </Router>
   );
 };
 

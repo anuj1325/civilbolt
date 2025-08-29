@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 import { IconWithBackground } from "@/ui/components/IconWithBackground";
 import { LinkButton } from "@/ui/components/LinkButton";
 import { TextField } from "@/ui/components/TextField";
@@ -8,7 +7,6 @@ import { OAuthSocialButton } from "@/ui/components/OAuthSocialButton";
 import { useNavigate } from "react-router-dom";
 
 function SignUpPage({ onNavigate }: { onNavigate: (page: string) => void }) {
-  const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
@@ -23,47 +21,20 @@ function SignUpPage({ onNavigate }: { onNavigate: (page: string) => void }) {
     }));
   };
 
-  const handleCreateAccount = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          screen_hint: "signup",
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Sign-up error:", error);
-    }
+  const handleCreateAccount = () => {
+    navigate('/contractor-hub');
   };
 
   const handleSignIn = () => {
     onNavigate('signin');
   };
 
-  const handleGoogleSignUp = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          connection: "google-oauth2",
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Google sign-up error:", error);
-    }
+  const handleGoogleSignUp = () => {
+    navigate('/contractor-hub');
   };
 
-  const handleAppleSignUp = async () => {
-    try {
-      await loginWithRedirect({
-        authorizationParams: {
-          connection: "apple",
-          redirect_uri: `${window.location.origin}/contractor-hub`,
-        },
-      });
-    } catch (error) {
-      console.error("Apple sign-up error:", error);
-    }
+  const handleAppleSignUp = () => {
+    navigate('/contractor-hub');
   };
 
   const handleTermsClick = () => {

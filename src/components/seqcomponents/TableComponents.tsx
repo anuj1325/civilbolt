@@ -31,7 +31,7 @@ export const defaultSequenceColumns: ColumnConfig<SequenceOfEvents>[] = [
   { key: 'phase', header: 'Phase', sortable: true, filterable: true, visible: true, width: '180px' },
   { key: 'category', header: 'Category', sortable: true, filterable: true, visible: true, width: '150px' },
   { key: 'description', header: 'Description', visible: true, width: '300px' },
-  { key: 'status', header: 'Status', sortable: true, filterable: true, visible: true, width: '120px', render: (sequence) => <SequenceStatusBadge status={sequence.status} /> },
+  { key: 'status', header: 'Status', sortable: true, filterable: true, visible: false, width: '120px', render: (sequence) => <SequenceStatusBadge status={sequence.status} /> },
   { key: 'priority', header: 'Priority', sortable: true, filterable: true, visible: true, width: '100px', render: (sequence) => <PriorityBadge priority={sequence.priority} /> },
   { key: 'expectedDuration', header: 'Duration', sortable: true, visible: true, width: '120px' },
   { key: 'targetDate', header: 'Target Date', sortable: true, visible: true, width: '120px', render: (sequence) => sequence.targetDate ? new Date(sequence.targetDate).toLocaleDateString() : '-' },
