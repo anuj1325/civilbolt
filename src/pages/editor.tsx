@@ -553,10 +553,10 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
   };
 
   const editorContent = (
-    <div className="h-full w-full flex-col">
+    <div className="h-full w-full flex-col p-0">
       <div className="flex relative" style={{height: '100vh', overflow: 'hidden'}}>
         <div 
-          className="flex-shrink-0 p-6 relative editor-scroll" 
+          className="flex-shrink-0 p-2 relative editor-scroll" 
           style={{
             width: editorWidth,
             minWidth: '300px',
@@ -1133,7 +1133,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
                 </div>
                 
                 {/* Actions */}
-                <div className="flex gap-3 justify-end p-6 pt-0">
+                <div className="flex gap-3 justify-end p-4 pt-0">
                   <button 
                     className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg font-medium hover:bg-gray-200 transition-colors" 
                     onClick={() => setShowFeedback(false)}
@@ -1196,7 +1196,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
 
         {/* Industry standard resizer handle */}
         <div
-          className="group flex items-center justify-center hover:bg-gray-50 transition-all duration-200 select-none"
+          className="group flex items-center justify-center hover:bg-gray-50 transition-all duration-100 select-none"
           style={{ 
             width: 32, 
             cursor: 'col-resize', 
@@ -1221,7 +1221,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
             style={{ 
               left: '-8px', 
               right: '-8px', 
-              width: '48px',
+              width: '8px',
               height: '100%'
             }}
             onMouseDown={(e) => { 
