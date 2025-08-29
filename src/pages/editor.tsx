@@ -358,54 +358,40 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
     // Implement save functionality
   };
 
-  // Resizer logic
+  // Simple and reliable resizer logic
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizing.current) return;
       
-      // Get viewport width for calculations
       const viewportWidth = window.innerWidth;
-      const sidebarWidth = 350; // Fixed sidebar width + some margin
-      const minWidth = 300; // Minimum editor width
-      const maxWidth = viewportWidth - sidebarWidth; // Maximum editor width
+      const sidebarWidth = 320; // Fixed sidebar width
+      const minWidth = 300; // Minimum editor width  
+      const maxWidth = viewportWidth - sidebarWidth - 50; // Maximum editor width with margin
       
-      // Calculate new width based on mouse X position
-      const newWidth = Math.max(minWidth, Math.min(e.clientX - 50, maxWidth));
-      
-      // Update width
+      // Simple calculation: mouse position becomes the new width
+      const newWidth = Math.max(minWidth, Math.min(e.clientX, maxWidth));
       setEditorWidth(newWidth);
       
-      // Prevent text selection and default behavior during resize
       e.preventDefault();
-      e.stopPropagation();
     };
 
-    const handleMouseUp = (e: MouseEvent) => {
+    const handleMouseUp = () => {
       if (isResizing.current) {
         isResizing.current = false;
         document.body.style.cursor = '';
         document.body.style.userSelect = '';
-        document.body.style.pointerEvents = '';
-        
-        e.preventDefault();
-        e.stopPropagation();
       }
     };
 
-    // Add event listeners when resizing starts
-    if (isResizing.current) {
-      document.addEventListener('mousemove', handleMouseMove, { passive: false });
-      document.addEventListener('mouseup', handleMouseUp, { passive: false });
-      document.body.style.cursor = 'col-resize';
-      document.body.style.userSelect = 'none';
-      document.body.style.pointerEvents = 'none';
-    }
+    // Always have listeners ready
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing.current]);
+  }, []);
 
   // New: Analyze the last line using LanguageTool API
   const analyzeLine = async (line: string) => {
@@ -575,7 +561,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
             width: editorWidth,
             minWidth: '300px',
             maxWidth: `calc(100vw - 400px)`,
-            transition: isResizing.current ? 'none' : 'width 0.2s ease-out',
+            transition: isResizing.current ? 'none' : 'width 0.1s ease',
             overflow: 'auto'
           }}>
           {/* Back to Timeline Navigation */}
@@ -1220,8 +1206,9 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
           }}
           onMouseDown={(e) => { 
             e.preventDefault();
-            e.stopPropagation();
             isResizing.current = true;
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
           }}
           onMouseUp={(e) => {
             e.preventDefault();
@@ -1239,22 +1226,38 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
             }}
             onMouseDown={(e) => { 
               e.preventDefault();
-              e.stopPropagation();
               isResizing.current = true;
+              document.body.style.cursor = 'col-resize';
+              document.body.style.userSelect = 'none';
             }}
           />
           
           {/* Visual handle */}
           <div
-            className="transition-all duration-200 bg-gray-300 group-hover:bg-blue-400 rounded-full flex items-center justify-center shadow-sm relative z-10 select-none"
-            style={{ width: 4, height: 60 }}
+            className="transition-all duration-200 bg-gray-300 group-hover:bg-blue-400 rounded-lg flex items-center justify-center shadow-sm relative z-10 select-none"
+            style={{ width: 16, height: 60 }}
           >
-            {/* Grip dots */}
-            <div className="flex flex-col gap-1">
-              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
-              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
-              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
-            </div>
+            {/* Resize icon */}
+            <svg 
+              width="12" 
+              height="12" 
+              viewBox="0 0 16 16" 
+              fill="none" 
+              className="text-white opacity-80"
+            >
+              {/* Left arrow */}
+              <path 
+                d="M6 8L2 4V6H0V10H2V12L6 8Z" 
+                fill="currentColor"
+              />
+              {/* Right arrow */}
+              <path 
+                d="M10 8L14 4V6H16V10H14V12L10 8Z" 
+                fill="currentColor"
+              />
+              {/* Center divider */}
+              <rect x="7" y="3" width="2" height="10" fill="currentColor" opacity="0.6"/>
+            </svg>
           </div>
         </div>
 
