@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search } from 'lucide-react';
+
 import EditorToolbar from '../components/editor/EditorToolbar';
 import EditorSidebar from "../components/editor/EditorSidebar";
 import { DefaultPageLayout } from "@/ui/layouts/DefaultPageLayout";
-import { IconWithBackground } from "@/ui/components/IconWithBackground";
-import { Breadcrumbs } from "@/ui/components/Breadcrumbs";
-import { TextField } from "@/ui/components/TextField";
-import { Avatar } from "@/ui/components/Avatar";
-import { Tabs } from "@/ui/components/Tabs";
-import { Button } from "@/ui/components/Button";
-import { ToggleGroup } from "@/ui/components/ToggleGroup";
-import { IconButton } from "@/ui/components/IconButton";
+import { Component4 } from "@/ui/components/Component4";
 
 
 // ScoreBar component with dynamic color
@@ -75,9 +68,10 @@ export interface EditorProps {
   referenceLetter?: Letter | null;
   availableLetters?: Letter[];
   selectedDraft?: Draft | null;
+  standalone?: boolean;
 }
 
-const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, availableLetters = [], selectedDraft }) => {
+const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, availableLetters = [], selectedDraft, standalone = true }) => {
   const [draft, setDraft] = useState<string>("");
   const [sidebarTab, setSidebarTab] = useState<string>("score");
   const [editorWidth, setEditorWidth] = useState<number>(window.innerWidth * 0.6);
@@ -551,40 +545,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
     };
   };
 
-  return (
-    <DefaultPageLayout>
-    <div className="flex w-full items-center justify-between border-b border-solid border-neutral-border px-8 py-4">
-      <div className="flex items-center gap-2">
-        <IconWithBackground size="small" icon="FeatherBriefcase" />
-        <span className="text-heading-3 font-heading-3 text-default-font">
-          Iron Triangle Limited
-        </span>
-        <Breadcrumbs>
-          <Breadcrumbs.Divider />
-          <Breadcrumbs.Item active={true}></Breadcrumbs.Item>
-        </Breadcrumbs>
-      </div>
-      <div className="flex items-center gap-4">
-        <TextField
-          variant="filled"
-          label=""
-          helpText=""
-          icon="FeatherSearch"
-        >
-          <TextField.Input
-            placeholder="Search projects..."
-            value=""
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {}}
-          />
-        </TextField>
-        <Avatar
-          size="small"
-          image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-        >
-          J
-        </Avatar>
-      </div>
-    </div>
+  const editorContent = (
     <div className="h-full w-full flex-col">
       <div className="flex relative" style={{height: '100vh', overflow: 'hidden'}}>
         <div 
@@ -1320,9 +1281,14 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
         </div>
       )}
     </div>
-    </DefaultPageLayout>
-
   );
+
+  return standalone ? (
+    <DefaultPageLayout>
+      <Component4 text="Letter Drafting" />
+      {editorContent}
+    </DefaultPageLayout>
+  ) : editorContent;
 };
 
 export default Editor;

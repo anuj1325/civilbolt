@@ -80,7 +80,7 @@ const SequenceOfEvent: React.FC<SequenceOfEventProps> = ({ onNavigate }) => {
       case 'table':
         return <TableView onEventClick={handleEventClick} selectedEvent={selectedEvent} selectedSequence={selectedSequence} onGenerateSummary={handleGenerateSummary} onDraftLetter={handleDraftLetter} />; 
       case 'drafting':
-        return <Editor onNavigate={handleNavigate} onClose={() => setCurrentPage('draft-management')} referenceLetter={selectedLetter} availableLetters={getAllAvailableLetters()} selectedDraft={selectedDraft} />;
+        return <Editor onNavigate={handleNavigate} onClose={() => setCurrentPage('draft-management')} referenceLetter={selectedLetter} availableLetters={getAllAvailableLetters()} selectedDraft={selectedDraft} standalone={false} />;
       case 'draft-management':
         return <DraftManagement onNavigate={handleNavigate} onEditDraft={handleEditDraft} />;
       default:
