@@ -8,11 +8,14 @@
  */
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import * as SubframeUtils from "../utils";
 import { SidebarRailWithIcons } from "../components/SidebarRailWithIcons";
 import { DropdownMenu } from "../components/DropdownMenu";
 import * as SubframeCore from "@subframe/core";
 import { Avatar } from "../components/Avatar";
+import { Tooltip } from "../components/Tooltip";
+import { Button } from "../components/Button";
 
 interface DefaultPageLayoutRootProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -27,6 +30,14 @@ const DefaultPageLayoutRoot = React.forwardRef<
   { children, className, ...otherProps }: DefaultPageLayoutRootProps,
   ref
 ) {
+  const navigate = useNavigate();
+  const [isSidebarExpanded, setIsSidebarExpanded] = React.useState(true);
+  const [sequenceSubmenuExpanded, setSequenceSubmenuExpanded] = React.useState(false);
+
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
   return (
     <div
       className={SubframeUtils.twClassNames(
@@ -37,72 +48,184 @@ const DefaultPageLayoutRoot = React.forwardRef<
       {...otherProps}
     >
       <SidebarRailWithIcons
+        expanded={isSidebarExpanded}
         header={
-          <div className="flex flex-col items-center justify-center gap-2 px-1 py-1">
-            <img
-              className="h-6 w-6 flex-none object-cover"
-              src="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/y2rsnhq3mex4auk54aye.png"
-            />
+          <div className="flex w-full flex-col items-start gap-2">
+            <div className="flex w-full items-center gap-2">
+              <img
+                className="h-6 w-6 flex-none object-cover"
+                src="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/y2rsnhq3mex4auk54aye.png"
+              />
+              {isSidebarExpanded ? (
+                <span className="text-heading-3 font-heading-3 text-default-font">
+                  Bolt
+                </span>
+              ) : null}
+            </div>
+            <Button
+              variant="neutral-secondary"
+              size="small"
+              iconRight="FeatherChevronsLeft"
+              onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
+            >
+              {isSidebarExpanded ? <span>Collapse</span> : null}
+            </Button>
           </div>
-        }
+    }
         footer={
-          <>
-            <SidebarRailWithIcons.NavItem icon="FeatherBell">
-              Item
-            </SidebarRailWithIcons.NavItem>
-            <SidebarRailWithIcons.NavItem icon="FeatherSettings">
-              Item
-            </SidebarRailWithIcons.NavItem>
-            <div className="flex flex-col items-center justify-end gap-1 px-1 py-1">
-              <SubframeCore.DropdownMenu.Root>
-                <SubframeCore.DropdownMenu.Trigger asChild={true}>
+          <div className="flex w-full flex-col items-start gap-2">
+            <div className="flex w-full flex-col items-start gap-1">
+              <SubframeCore.Tooltip.Provider>
+                <SubframeCore.Tooltip.Root>
+                  <SubframeCore.Tooltip.Trigger asChild={true}>
+                    <div className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-neutral-50">
+                      <SubframeCore.Icon
+                        className="text-body-bold font-body-bold text-neutral-500"
+                        name="FeatherBell"
+                      />
+                      {isSidebarExpanded ? (
+                        <span className="text-body-bold font-body-bold text-neutral-700">
+                          Notifications
+                        </span>
+                      ) : null}
+                    </div>
+                  </SubframeCore.Tooltip.Trigger>
+                  {!isSidebarExpanded ? (
+                    <SubframeCore.Tooltip.Portal>
+                      <SubframeCore.Tooltip.Content
+                        side="right"
+                        align="center"
+                        sideOffset={4}
+                        asChild={true}
+                      >
+                        <Tooltip>Notifications</Tooltip>
+                      </SubframeCore.Tooltip.Content>
+                    </SubframeCore.Tooltip.Portal>
+                  ) : null}
+                </SubframeCore.Tooltip.Root>
+              </SubframeCore.Tooltip.Provider>
+              <SubframeCore.Tooltip.Provider>
+                <SubframeCore.Tooltip.Root>
+                  <SubframeCore.Tooltip.Trigger asChild={true}>
+                    <div className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 hover:bg-neutral-50">
+                      <SubframeCore.Icon
+                        className="text-body-bold font-body-bold text-neutral-500"
+                        name="FeatherSettings"
+                      />
+                      {isSidebarExpanded ? (
+                        <span className="text-body-bold font-body-bold text-neutral-700">
+                          Settings
+                        </span>
+                      ) : null}
+                    </div>
+                  </SubframeCore.Tooltip.Trigger>
+                  {!isSidebarExpanded ? (
+                    <SubframeCore.Tooltip.Portal>
+                      <SubframeCore.Tooltip.Content
+                        side="right"
+                        align="center"
+                        sideOffset={4}
+                        asChild={true}
+                      >
+                        <Tooltip>Settings</Tooltip>
+                      </SubframeCore.Tooltip.Content>
+                    </SubframeCore.Tooltip.Portal>
+                  ) : null}
+                </SubframeCore.Tooltip.Root>
+              </SubframeCore.Tooltip.Provider>
+            </div>
+            <SubframeCore.DropdownMenu.Root>
+              <SubframeCore.DropdownMenu.Trigger asChild={true}>
+                <div className="flex w-full cursor-pointer items-center gap-2 rounded-md border border-solid border-neutral-border p-2">
                   <Avatar
                     size="small"
                     image="https://res.cloudinary.com/subframe/image/upload/v1711417507/shared/fychrij7dzl8wgq2zjq9.avif"
                   >
                     A
                   </Avatar>
-                </SubframeCore.DropdownMenu.Trigger>
-                <SubframeCore.DropdownMenu.Portal>
-                  <SubframeCore.DropdownMenu.Content
-                    side="right"
-                    align="end"
-                    sideOffset={4}
-                    asChild={true}
-                  >
-                    <DropdownMenu>
-                      <DropdownMenu.DropdownItem icon="FeatherUser">
-                        Profile
-                      </DropdownMenu.DropdownItem>
-                      <DropdownMenu.DropdownItem icon="FeatherSettings">
-                        Settings
-                      </DropdownMenu.DropdownItem>
-                      <DropdownMenu.DropdownItem icon="FeatherLogOut">
-                        Log out
-                      </DropdownMenu.DropdownItem>
-                    </DropdownMenu>
-                  </SubframeCore.DropdownMenu.Content>
-                </SubframeCore.DropdownMenu.Portal>
-              </SubframeCore.DropdownMenu.Root>
-            </div>
-          </>
+                  {isSidebarExpanded ? (
+                    <div className="flex flex-col items-start">
+                      <span className="text-body-bold font-body-bold text-default-font">
+                        Anuj
+                      </span>
+                      <span className="text-caption font-caption text-subtext-color">
+                        anuj@subframe.com
+                      </span>
+                    </div>
+                  ) : null}
+                </div>
+              </SubframeCore.DropdownMenu.Trigger>
+              <SubframeCore.DropdownMenu.Portal>
+                <SubframeCore.DropdownMenu.Content
+                  side="right"
+                  align="end"
+                  sideOffset={4}
+                  asChild={true}
+                >
+                  <DropdownMenu>
+                    <DropdownMenu.DropdownItem icon="FeatherUser">
+                      Profile
+                    </DropdownMenu.DropdownItem>
+                    <DropdownMenu.DropdownItem icon="FeatherSettings">
+                      Settings
+                    </DropdownMenu.DropdownItem>
+                    <DropdownMenu.DropdownItem icon="FeatherLogOut">
+                      Log out
+                    </DropdownMenu.DropdownItem>
+                  </DropdownMenu>
+                </SubframeCore.DropdownMenu.Content>
+              </SubframeCore.DropdownMenu.Portal>
+            </SubframeCore.DropdownMenu.Root>
+          </div>
         }
       >
-        <SidebarRailWithIcons.NavItem icon="FeatherHome" selected={true}>
+        <SidebarRailWithIcons.NavItem 
+          icon="FeatherHome" 
+          selected={true}
+          onClick={() => handleNavigation('/contractor-hub')}
+          expanded={isSidebarExpanded}
+        >
           Home
         </SidebarRailWithIcons.NavItem>
-        <SidebarRailWithIcons.NavItem icon="FeatherInbox">
-          Inbox
+        <SidebarRailWithIcons.NavItem
+          icon="FeatherFileText"
+          onClick={() => handleNavigation('/editor')}
+          expanded={isSidebarExpanded}
+        >
+          Draft
         </SidebarRailWithIcons.NavItem>
-        <SidebarRailWithIcons.NavItem icon="FeatherBarChart2">
-          Reports
+        <SidebarRailWithIcons.NavItem
+          icon="FeatherCalendar"
+          onClick={() => handleNavigation('/project-management')}
+          expanded={isSidebarExpanded}
+        >
+          Obligation calendar
         </SidebarRailWithIcons.NavItem>
-        <SidebarRailWithIcons.NavItem icon="FeatherFolder">
-          Projects
+        <SidebarRailWithIcons.NavItem
+          icon="FeatherWorkflow"
+          onClick={() => handleNavigation('/sequence-of-event')}
+          expanded={isSidebarExpanded}
+          hasSubmenu={true}
+          submenuExpanded={sequenceSubmenuExpanded}
+          onToggleSubmenu={() => setSequenceSubmenuExpanded(!sequenceSubmenuExpanded)}
+          submenuItems={
+            <SidebarRailWithIcons.SubNavItem
+              onClick={() => handleNavigation('/corresponding-letters')}
+            >
+              Corresponding letters
+            </SidebarRailWithIcons.SubNavItem>
+          }
+        >
+          Sequence of Events
         </SidebarRailWithIcons.NavItem>
       </SidebarRailWithIcons>
       {children ? (
-        <div className="flex grow shrink-0 basis-0 flex-col items-start gap-2 self-stretch overflow-y-auto bg-default-background">
+        <div 
+          className="flex flex-col items-start gap-2 self-stretch overflow-y-auto bg-default-background transition-all"
+          style={{
+            width: isSidebarExpanded ? 'calc(100vw - 256px)' : 'calc(100vw - 80px)'
+          }}
+        >
           {children}
         </div>
       ) : null}

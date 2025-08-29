@@ -403,3 +403,184 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
 }
+
+// Sequence of Events Types
+export interface Letter {
+  id: string;
+  letterNo: string;
+  date: string;
+  from: 'Contractor' | 'NHAI';
+  to: 'Contractor' | 'NHAI';
+  subject: string;
+  description: string;
+  assignee: string;
+  attachments: string[];
+  priority: 'urgent' | 'high' | 'medium' | 'low';
+  status?: EventStatus;
+  contractDeadline?: string;
+  isOverdue?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: string;
+  updatedBy?: string;
+}
+
+export interface Event {
+  id: number;
+  eventTitle: string;
+  category?: EventCategory;
+  tags?: string[];
+  letters: Letter[];
+  // Main event properties for backward compatibility
+  from: 'Contractor' | 'NHAI';
+  to: 'Contractor' | 'NHAI';
+  date: string;
+  letterNo: string;
+  subject: string;
+  description: string;
+  assignee: string;
+  attachments: string[];
+  priority: 'urgent' | 'high' | 'medium' | 'low';
+  contractDeadline?: string;
+  isOverdue?: boolean;
+  status?: EventStatus;
+  createdAt?: string;
+  updatedAt?: string;
+  createdBy?: string;
+  updatedBy?: string;
+}
+
+export type EventStatus =
+  | 'draft'
+  | 'sent'
+  | 'received'
+  | 'acknowledged'
+  | 'in_progress'
+  | 'completed'
+  | 'cancelled'
+  | 'overdue';
+
+export type EventCategory =
+  | 'contract'
+  | 'technical'
+  | 'administrative'
+  | 'financial'
+  | 'safety'
+  | 'environmental'
+  | 'quality'
+  | 'legal'
+  | 'other';
+
+export interface SequenceOfEvents {
+  id: number;
+  sequenceTitle: string;
+  phase: 'Pre-Contract Phase' | 'Contract Execution Phase' | 'Operational Phase' | 'Resolution Phase';
+  category: string;
+  description: string;
+  status: 'not_started' | 'in_progress' | 'completed' | 'delayed';
+  expectedDuration: string;
+  keyDocuments: string[];
+  relatedEventIds: number[];
+  startDate?: string;
+  targetDate?: string;
+  completedDate?: string;
+  isOverdue?: boolean;
+  priority: 'urgent' | 'high' | 'medium' | 'low';
+}
+
+export type ViewType = 'vertical' | 'horizontal' | 'table';
+export type PageType = 'dashboard' | 'timeline' | 'table' | 'drafting' | 'draft-management';
+
+export interface Draft {
+  id: string;
+  draftName: string;
+  description: string;
+  subject: string;
+  draftNumber: string;
+  letterInReference: string;
+  to: string;
+  copyTo: string[];
+  status: 'In Draft' | 'Published' | 'Sent for Review' | 'Approved' | 'Sent to Authority';
+  createdDate: string;
+  lastModified: string;
+  content: string;
+  createdBy: string;
+}
+
+// Component Props for Sequence of Events
+export interface SequenceOfEventProps {
+  onNavigate?: (page: string) => void;
+}
+
+export interface SummaryModalProps {
+  letter: Letter | null;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface LetterCardProps {
+  letter: Letter;
+  isExpanded: boolean;
+  onToggle: () => void;
+  side?: 'left' | 'right';
+  onLetterClick?: ((letter: Letter) => void) | undefined;
+  isSelected?: boolean;
+  onGenerateSummary?: (letter: Letter) => void;
+  onDraftLetter?: (letter: Letter) => void;
+}
+
+export interface EventCardProps {
+  event: Event;
+  isExpanded: boolean;
+  onToggle: () => void;
+  side?: 'left' | 'right';
+  onEventClick?: ((event: Event) => void) | undefined;
+  isSelected?: boolean;
+}
+
+export interface ColumnConfig<T> {
+  key: keyof T | 'actions';
+  header: string;
+  render?: (item: T) => React.ReactNode;
+  sortable?: boolean;
+  filterable?: boolean;
+  visible?: boolean;
+  width?: string;
+  resizable?: boolean;
+}
+
+export type SortDirection = 'asc' | 'desc' | null;
+
+export interface SortConfig {
+  key: string;
+  direction: SortDirection;
+}
+
+export interface FilterConfig {
+  [key: string]: any;
+}
+
+export interface TableConfig<T> {
+  columns: ColumnConfig<T>[];
+  sortConfig: SortConfig;
+  filterConfig: FilterConfig;
+  showColumnSettings?: boolean;
+}
+
+export interface EventTableProps {
+  data: Event[];
+  columns?: ColumnConfig<Event>[];
+  onEventClick?: (event: Event) => void;
+}
+
+export interface SequenceTableProps {
+  data: SequenceOfEvents[];
+  onSequenceClick?: (sequence: SequenceOfEvents) => void;
+  tableConfig?: TableConfig<SequenceOfEvents>;
+  onTableConfigChange?: (config: TableConfig<SequenceOfEvents>) => void;
+}
+
+export interface DraftManagementProps {
+  onNavigate?: (page: PageType) => void;
+  onEditDraft?: (draftId: string) => void;
+}

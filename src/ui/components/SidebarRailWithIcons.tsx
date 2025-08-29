@@ -17,6 +17,11 @@ interface NavItemProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   selected?: boolean;
   className?: string;
+  expanded?: boolean;
+  hasSubmenu?: boolean;
+  submenuExpanded?: boolean;
+  onToggleSubmenu?: () => void;
+  submenuItems?: React.ReactNode;
 }
 
 const NavItem = React.forwardRef<HTMLDivElement, NavItemProps>(function NavItem(
@@ -25,44 +30,115 @@ const NavItem = React.forwardRef<HTMLDivElement, NavItemProps>(function NavItem(
     children,
     selected = false,
     className,
+    expanded = false,
+    hasSubmenu = false,
+    submenuExpanded = false,
+    onToggleSubmenu,
+    submenuItems,
     ...otherProps
   }: NavItemProps,
   ref
 ) {
+  const handleMainClick = (e: React.MouseEvent) => {
+    if (otherProps.onClick) {
+      otherProps.onClick(e);
+    }
+  };
+
+  const handleSubmenuToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onToggleSubmenu) {
+      onToggleSubmenu();
+    }
+  };
+
   return (
-    <SubframeCore.Tooltip.Provider>
-      <SubframeCore.Tooltip.Root>
-        <SubframeCore.Tooltip.Trigger asChild={true}>
-          <div
+    <div className="w-full">
+      <div
+        className={SubframeUtils.twClassNames(
+          "group/ba3a61e5 flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-2 hover:bg-neutral-50 active:bg-neutral-100",
+          { "bg-brand-50 hover:bg-brand-50 active:bg-brand-100": selected },
+          className
+        )}
+        ref={ref}
+        onClick={handleMainClick}
+      >
+        <SubframeCore.Icon
+          className={SubframeUtils.twClassNames(
+            "text-heading-3 font-heading-3 text-neutral-600",
+            { "text-brand-700": selected }
+          )}
+          name={icon}
+        />
+        {expanded ? (
+          <span
             className={SubframeUtils.twClassNames(
-              "group/ba3a61e5 flex cursor-pointer items-center gap-2 rounded-md px-2 py-2 hover:bg-neutral-50 active:bg-neutral-100",
-              { "bg-brand-50 hover:bg-brand-50 active:bg-brand-100": selected },
-              className
+              "text-body-bold font-body-bold text-neutral-700 flex-1",
+              { "text-brand-700": selected }
             )}
-            ref={ref}
-            {...otherProps}
+          >
+            {children}
+          </span>
+        ) : null}
+        {expanded && hasSubmenu ? (
+          <div
+            className="p-1 hover:bg-neutral-100 rounded"
+            onClick={handleSubmenuToggle}
           >
             <SubframeCore.Icon
               className={SubframeUtils.twClassNames(
-                "text-heading-3 font-heading-3 text-neutral-600",
-                { "text-brand-700": selected }
+                "text-heading-3 font-heading-3 text-neutral-600 transition-transform",
+                { "rotate-90": submenuExpanded }
               )}
-              name={icon}
+              name="FeatherChevronRight"
             />
           </div>
-        </SubframeCore.Tooltip.Trigger>
-        <SubframeCore.Tooltip.Portal>
-          <SubframeCore.Tooltip.Content
-            side="right"
-            align="center"
-            sideOffset={4}
-            asChild={true}
-          >
-            <Tooltip>{children}</Tooltip>
-          </SubframeCore.Tooltip.Content>
-        </SubframeCore.Tooltip.Portal>
-      </SubframeCore.Tooltip.Root>
-    </SubframeCore.Tooltip.Provider>
+        ) : null}
+      </div>
+      {expanded && hasSubmenu && submenuExpanded && submenuItems ? (
+        <div className="ml-4 mt-1 space-y-1">
+          {submenuItems}
+        </div>
+      ) : null}
+    </div>
+  );
+});
+
+interface SubNavItemProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode;
+  selected?: boolean;
+  className?: string;
+}
+
+const SubNavItem = React.forwardRef<HTMLDivElement, SubNavItemProps>(function SubNavItem(
+  {
+    children,
+    selected = false,
+    className,
+    ...otherProps
+  }: SubNavItemProps,
+  ref
+) {
+  return (
+    <div
+      className={SubframeUtils.twClassNames(
+        "flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 hover:bg-neutral-50 active:bg-neutral-100 text-sm",
+        { "bg-brand-50 hover:bg-brand-50 active:bg-brand-100": selected },
+        className
+      )}
+      ref={ref}
+      {...otherProps}
+    >
+      <div className="w-2 h-2 rounded-full bg-neutral-400" />
+      <span
+        className={SubframeUtils.twClassNames(
+          "text-body font-body text-neutral-600",
+          { "text-brand-700 font-body-bold": selected }
+        )}
+      >
+        {children}
+      </span>
+    </div>
   );
 });
 
@@ -72,6 +148,7 @@ interface SidebarRailWithIconsRootProps
   footer?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
+  expanded?: boolean;
 }
 
 const SidebarRailWithIconsRoot = React.forwardRef<
@@ -83,6 +160,7 @@ const SidebarRailWithIconsRoot = React.forwardRef<
     footer,
     children,
     className,
+    expanded = false,
     ...otherProps
   }: SidebarRailWithIconsRootProps,
   ref
@@ -90,24 +168,25 @@ const SidebarRailWithIconsRoot = React.forwardRef<
   return (
     <nav
       className={SubframeUtils.twClassNames(
-        "flex h-full flex-col items-start border-r border-solid border-neutral-border bg-default-background",
+        "flex h-full flex-col items-start border-r border-solid border-neutral-border bg-default-background transition-all",
+        { "w-64 p-4": expanded, "w-20 p-2": !expanded },
         className
       )}
       ref={ref}
       {...otherProps}
     >
       {header ? (
-        <div className="flex w-full flex-col items-center justify-center gap-2 px-3 py-3">
+        <div className="flex w-full flex-col items-start gap-2 ">
           {header}
         </div>
       ) : null}
       {children ? (
-        <div className="flex w-full grow shrink-0 basis-0 flex-col items-center gap-1 px-3 py-3 overflow-auto">
+        <div className="flex w-full grow shrink-0 basis-0 flex-col items-start gap-1  overflow-auto">
           {children}
         </div>
       ) : null}
       {footer ? (
-        <div className="flex w-full flex-col items-center justify-end gap-1 border-t border-solid border-neutral-border px-3 py-3">
+        <div className="flex w-full flex-col items-start justify-end gap-1 border-t border-solid border-neutral-border py-3">
           {footer}
         </div>
       ) : null}
@@ -117,4 +196,5 @@ const SidebarRailWithIconsRoot = React.forwardRef<
 
 export const SidebarRailWithIcons = Object.assign(SidebarRailWithIconsRoot, {
   NavItem,
+  SubNavItem,
 });

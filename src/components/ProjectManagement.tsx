@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TaskProvider } from '../contexts/TaskContext';
 import { ViewType } from '../types/Task';
+import { Component4 } from "@/ui/components/Component4";
 import Header from './Header';
 import CalendarView from './views/CalendarView';
 import ListView from './views/ListView';
@@ -9,6 +10,7 @@ import TableView from './views/TableView';
 import GanttView from './views/GanttView';
 import TaskModal from './TaskModal';
 import { useTask } from '../contexts/TaskContext';
+import { DefaultPageLayout } from "@/ui/layouts/DefaultPageLayout";
 
 const ProjectManagement: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewType>('board');
@@ -42,7 +44,9 @@ const ProjectManagement: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <DefaultPageLayout>
+      <Component4 text="Iron Triangle Limited / Obligation Calendar" />
+    <div className="flex h-full w-full flex-col">
       <Header
         currentView={currentView}
         onViewChange={setCurrentView}
@@ -58,6 +62,7 @@ const ProjectManagement: React.FC = () => {
         onSubmit={handleTaskModalSubmit}
       />
     </div>
+    </DefaultPageLayout>
   );
 };
 

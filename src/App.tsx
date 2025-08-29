@@ -14,7 +14,9 @@ import Pre_BuiltTemplets from "./components/PrebuiltTemplets";
 import { WorkflowFlow } from "./components/WorkflowFlow";
 import TemporalFlowWorkflow from "./components/TemporalFlowWorkflow";
 import ProjectManagement from "./components/ProjectManagement";
+import SequenceOfEvent from "./components/SequenceOfEvent";
 import Editor from "./pages/editor";
+import {TableView} from "./components/seqcomponents/TableView";
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -114,6 +116,26 @@ const AppContent: React.FC = () => {
         <Route
           path="/editor"
           element={<Editor onNavigate={handleNavigate} />}
+        />
+        <Route
+          path="/sequence-of-event"
+          element={
+            isAuthenticated ? (
+              <SequenceOfEvent onNavigate={handleNavigate} />
+            ) : (
+              <SignInPage onNavigate={handleNavigate} />
+            )
+          }
+        />
+        <Route
+          path="/corresponding-letters"
+          element={
+            isAuthenticated ? (
+              <TableView />
+            ) : (
+              <SignInPage onNavigate={handleNavigate} />
+            )
+          }
         />
         <Route path="/" element={<SignUpPage onNavigate={handleNavigate} />} />
       </Routes>
