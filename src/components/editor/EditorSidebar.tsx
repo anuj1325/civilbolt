@@ -35,7 +35,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
   return (
     <div className="flex flex-col items-center w-24">
       {/* Label row: icon + text */}
-      <span className={`mb-2 flex items-center gap-1 text-heading-3 text-body ${config.colorText}`}>
+      <span className={`mb-2 flex items-center gap-1 text-body-bold ${config.colorText}`}>
         <span className="rounded-full bg-gray-100 p-1">{config.icon}</span>
         {label}
       </span>
@@ -47,7 +47,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
         />
       </div>
       {/* Score number */}
-      <span className={`mt-1 ${config.colorText} text-heading-3 text-base`}>{score}</span>
+      <span className={`mt-1 ${config.colorText} text-body-bold text-base`}>{score}</span>
     </div>
   );
 };
@@ -178,10 +178,10 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             {/* Letter References Section */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-heading-3 text-gray-800">Letter References</h3>
+                <h3 className="text-caption-bold text-gray-800">Letter References</h3>
                 <button
                   onClick={() => setShowReferenceModal(true)}
-                  className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white text-body rounded hover:bg-blue-600 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white text-body-bold rounded hover:bg-blue-600 transition-colors"
                 >
                   <Plus size={14} />
                   Add Reference
@@ -195,8 +195,8 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-body text-body-bold text-blue-600">{letter.letterNo}</span>
-                            <span className="text-caption text-gray-500">
+                            <span className="text-body-bold text-blue-600">{letter.letterNo}</span>
+                            <span className="text-caption text-gray-700">
                               {new Date(letter.date).toLocaleDateString()}
                             </span>
                           </div>
@@ -227,7 +227,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
 
             {/* Legal Citations Section */}
             <div>
-              <h3 className="text-heading-3 text-gray-800 mb-2">Legal Citations</h3>
+              <h3 className="text-body-bold text-gray-800 mb-2">Legal Citations</h3>
               {citations.length > 0 ? (
                 <ul className="list-disc ml-6 text-body text-gray-700 space-y-1">
                   {citations.map((cite, idx) => (
