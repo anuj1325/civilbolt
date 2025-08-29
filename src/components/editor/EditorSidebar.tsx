@@ -20,34 +20,76 @@ interface Letter {
 interface ScoreBarProps {
   label: string;
   score: number;
+  maxScore?: number;
 }
 
-const CATEGORY_CONFIG = {
-  Correctness: { colorBar: "bg-red-500", colorText: "text-red-500", icon: <CheckCircle size={16} className="text-red-500" /> },
-  Clarity: { colorBar: "bg-blue-500", colorText: "text-blue-500", icon: <Lightbulb size={16} className="text-blue-500" /> },
-  Engagement: { colorBar: "bg-green-500", colorText: "text-green-500", icon: <Users size={16} className="text-green-500" /> },
-  Delivery: { colorBar: "bg-purple-500", colorText: "text-purple-500", icon: <Send size={16} className="text-purple-500" /> },
-  Default: { colorBar: "bg-gray-500", colorText: "text-gray-500", icon: null },
+const getScoreColor = (score: number): { bg: string; text: string; ring: string } => {
+  if (score >= 90) return { bg: "bg-emerald-500", text: "text-emerald-700", ring: "ring-emerald-200" };
+  if (score >= 80) return { bg: "bg-green-500", text: "text-green-700", ring: "ring-green-200" };
+  if (score >= 70) return { bg: "bg-yellow-500", text: "text-yellow-700", ring: "ring-yellow-200" };
+  if (score >= 60) return { bg: "bg-orange-500", text: "text-orange-700", ring: "ring-orange-200" };
+  return { bg: "bg-red-500", text: "text-red-700", ring: "ring-red-200" };
 };
 
-const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
-  const config = CATEGORY_CONFIG[label] || CATEGORY_CONFIG.Default;
+const CATEGORY_CONFIG = {
+  Correctness: { icon: <CheckCircle size={14} />, description: "Grammar & Legal Accuracy" },
+  Clarity: { icon: <Lightbulb size={14} />, description: "Readability & Understanding" },
+  Engagement: { icon: <Users size={14} />, description: "Persuasiveness & Impact" },
+  Delivery: { icon: <Send size={14} />, description: "Professional Tone & Flow" },
+};
+
+const ScoreBar: React.FC<ScoreBarProps> = ({ label, score, maxScore = 100 }) => {
+  const config = CATEGORY_CONFIG[label] || { icon: null, description: "" };
+  const colors = getScoreColor(score);
+  const percentage = Math.min((score / maxScore) * 100, 100);
+  
   return (
-    <div className="flex flex-col items-center w-24">
-      {/* Label row: icon + text */}
-      <span className={`mb-2 flex items-center gap-1 text-body-bold ${config.colorText}`}>
-        <span className="rounded-full bg-gray-100 p-1">{config.icon}</span>
-        {label}
-      </span>
-      {/* Colored underline bar */}
-      <div className="h-2 w-full rounded-full bg-gray-100 relative">
-        <div
-          className={`absolute left-0 top-0 h-2 rounded-full ${config.colorBar} transition-all duration-300`}
-          style={{ width: `${score}%` }}
-        />
+    <div className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <div className={`p-1.5 rounded-full ${colors.bg} bg-opacity-10 ${colors.text}`}>
+            {config.icon}
+          </div>
+          <div>
+            <h3 className="font-semibold text-gray-900 text-sm">{label}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{config.description}</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <div className={`text-xl font-bold ${colors.text}`}>{score}</div>
+          <div className="text-xs text-gray-400">/{maxScore}</div>
+        </div>
       </div>
-      {/* Score number */}
-      <span className={`mt-1 ${config.colorText} text-body-bold text-base`}>{score}</span>
+      
+      {/* Progress Bar */}
+      <div className="relative">
+        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full ${colors.bg} transition-all duration-500 ease-out rounded-full relative`}
+            style={{ width: `${percentage}%` }}
+          >
+            {/* Shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
+          </div>
+        </div>
+        
+        {/* Progress markers */}
+        <div className="flex justify-between mt-1 text-xs text-gray-400">
+          <span>0</span>
+          <span>25</span>
+          <span>50</span>
+          <span>75</span>
+          <span>{maxScore}</span>
+        </div>
+      </div>
+      
+      {/* Score interpretation */}
+      <div className="mt-2 text-center">
+        <span className={`text-xs px-2 py-1 rounded-full font-medium ${colors.bg} ${colors.text} bg-opacity-10`}>
+          {score >= 90 ? 'Excellent' : score >= 80 ? 'Good' : score >= 70 ? 'Fair' : score >= 60 ? 'Needs Improvement' : 'Poor'}
+        </span>
+      </div>
     </div>
   );
 };
@@ -137,7 +179,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
   };
 
   return (
-    <div className="flex-1 bg-white border-l border-gray-200 overflow-y-auto" style={{ minWidth: "320px" }}>
+    <div className="flex-1 bg-white border-l border-gray-200 overflow-y-auto sidebar-scroll" style={{ minWidth: "320px" }}>
       <div className="px-0 pt-0 pb-4">
         {/* Grammarly-style tab buttons */}
         <div className="flex border-b border-gray-200">
@@ -165,11 +207,57 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
 
         {/* Content */}
         {sidebarTab === "score" && (
-          <div className="flex justify-between items-start gap-2 p-4">
-            <ScoreBar label="Correctness" score={legalScore} />
-            <ScoreBar label="Clarity" score={contractualScore} />
-            <ScoreBar label="Engagement" score={lexicalScore} />
-            <ScoreBar label="Delivery" score={grammaticalScore} />
+          <div className="p-6">
+            {/* Overall Score Header */}
+            <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">Overall Score</h3>
+                <div className="text-3xl font-bold text-blue-600 mb-2">
+                  {Math.round((legalScore + contractualScore + lexicalScore + grammaticalScore) / 4)}
+                </div>
+                <div className="text-sm text-gray-600">
+                  Average of all metrics
+                </div>
+              </div>
+            </div>
+            
+            {/* Individual Score Cards */}
+            <div className="space-y-4">
+              <ScoreBar label="Correctness" score={legalScore} />
+              <ScoreBar label="Clarity" score={contractualScore} />
+              <ScoreBar label="Engagement" score={lexicalScore} />
+              <ScoreBar label="Delivery" score={grammaticalScore} />
+            </div>
+            
+            {/* Performance Insights */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg border">
+              <h4 className="font-semibold text-gray-900 mb-2 text-sm">Performance Insights</h4>
+              <div className="space-y-2 text-xs text-gray-600">
+                {(() => {
+                  const scores = [
+                    { name: "Correctness", value: legalScore },
+                    { name: "Clarity", value: contractualScore },
+                    { name: "Engagement", value: lexicalScore },
+                    { name: "Delivery", value: grammaticalScore }
+                  ];
+                  const highest = scores.reduce((prev, current) => prev.value > current.value ? prev : current);
+                  const lowest = scores.reduce((prev, current) => prev.value < current.value ? prev : current);
+                  
+                  return (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        <span>Strongest: <strong>{highest.name}</strong> ({highest.value})</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                        <span>Focus Area: <strong>{lowest.name}</strong> ({lowest.value})</span>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
           </div>
         )}
 
@@ -304,7 +392,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             )}
 
             {/* Letters List */}
-            <div className="max-h-96 overflow-y-auto p-4">
+            <div className="max-h-96 overflow-y-auto p-4 sidebar-scroll">
               {filteredLetters.length > 0 ? (
                 <div className="space-y-2">
                   {filteredLetters.map((letter) => {

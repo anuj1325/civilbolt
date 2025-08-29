@@ -14,20 +14,34 @@ interface ScoreBarProps {
 
 
 const getColor = (score: number) => {
-  if (score > 90) return 'bg-green-500';
-  if (score > 70) return 'bg-yellow-500';
-  return 'bg-red-500';
+  if (score >= 90) return { bg: 'bg-emerald-500', text: 'text-emerald-700' };
+  if (score >= 80) return { bg: 'bg-green-500', text: 'text-green-700' };
+  if (score >= 70) return { bg: 'bg-yellow-500', text: 'text-yellow-700' };
+  if (score >= 60) return { bg: 'bg-orange-500', text: 'text-orange-700' };
+  return { bg: 'bg-red-500', text: 'text-red-700' };
 };
 
-const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => (
-  <div className="flex flex-col items-center w-24">
-    <span className="text-xs font-medium mb-1">{label}</span>
-    <div className="w-full h-3 rounded-full bg-gray-200">
-      <div className={`${getColor(score)} h-3 rounded-full transition-all duration-300`} style={{ width: `${score}%` }} />
+const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
+  const colors = getColor(score);
+  
+  return (
+    <div className="flex flex-col items-center min-w-[80px] bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
+      <span className="text-xs font-semibold text-gray-700 mb-2">{label}</span>
+      <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden mb-2">
+        <div 
+          className={`${colors.bg} h-2 rounded-full transition-all duration-500 ease-out relative`} 
+          style={{ width: `${score}%` }} 
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"></div>
+        </div>
+      </div>
+      <span className={`text-lg font-bold ${colors.text}`}>{score}</span>
+      <span className="text-xs text-gray-500">
+        {score >= 90 ? 'Excellent' : score >= 80 ? 'Good' : score >= 70 ? 'Fair' : score >= 60 ? 'Needs Work' : 'Poor'}
+      </span>
     </div>
-    <span className="text-xs mt-1">{score}</span>
-  </div>
-);
+  );
+};
 
 // Letter interface for reference context
 interface Letter {
@@ -346,45 +360,52 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
 
   // Resizer logic
   useEffect(() => {
-    const container = document.querySelector('.flex.relative');
-    
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isResizing.current || !container) return;
+      if (!isResizing.current) return;
       
-      const containerRect = container.getBoundingClientRect();
-      const containerWidth = containerRect.width;
-      const sidebarWidth = 320; // Fixed sidebar width
-      const resizerWidth = 32;
-      const minWidth = Math.max(containerWidth * 0.3, 300); // 30% of container or 300px
-      const maxWidth = containerWidth - sidebarWidth - resizerWidth;
+      // Get viewport width for calculations
+      const viewportWidth = window.innerWidth;
+      const sidebarWidth = 350; // Fixed sidebar width + some margin
+      const minWidth = 300; // Minimum editor width
+      const maxWidth = viewportWidth - sidebarWidth; // Maximum editor width
       
-      // Calculate new width relative to container
-      const relativeX = e.clientX - containerRect.left;
-      const newWidth = Math.max(minWidth, Math.min(relativeX, maxWidth));
+      // Calculate new width based on mouse X position
+      const newWidth = Math.max(minWidth, Math.min(e.clientX - 50, maxWidth));
       
-      // Update width with smooth animation disabled during drag
+      // Update width
       setEditorWidth(newWidth);
       
-      // Prevent text selection during resize
+      // Prevent text selection and default behavior during resize
       e.preventDefault();
+      e.stopPropagation();
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (e: MouseEvent) => {
       if (isResizing.current) {
         isResizing.current = false;
         document.body.style.cursor = '';
         document.body.style.userSelect = '';
+        document.body.style.pointerEvents = '';
+        
+        e.preventDefault();
+        e.stopPropagation();
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
+    // Add event listeners when resizing starts
+    if (isResizing.current) {
+      document.addEventListener('mousemove', handleMouseMove, { passive: false });
+      document.addEventListener('mouseup', handleMouseUp, { passive: false });
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+      document.body.style.pointerEvents = 'none';
+    }
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
+  }, [isResizing.current]);
 
   // New: Analyze the last line using LanguageTool API
   const analyzeLine = async (line: string) => {
@@ -549,12 +570,12 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
     <div className="h-full w-full flex-col">
       <div className="flex relative" style={{height: '100vh', overflow: 'hidden'}}>
         <div 
-          className="flex-shrink-0 p-6 relative" 
+          className="flex-shrink-0 p-6 relative editor-scroll" 
           style={{
             width: editorWidth,
-            minWidth: '30%',
-            maxWidth: 'calc(100% - 350px)',
-            transition: isResizing.current ? 'none' : 'width 0.1s ease',
+            minWidth: '300px',
+            maxWidth: `calc(100vw - 400px)`,
+            transition: isResizing.current ? 'none' : 'width 0.2s ease-out',
             overflow: 'auto'
           }}>
           {/* Back to Timeline Navigation */}
@@ -898,6 +919,68 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
                 color: #9ca3af;
                 font-style: italic;
               }
+              
+              /* Custom scrollbar styles */
+              ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+              }
+              
+              ::-webkit-scrollbar-track {
+                background: transparent;
+                border-radius: 4px;
+              }
+              
+              ::-webkit-scrollbar-thumb {
+                background: #d1d5db;
+                border-radius: 4px;
+                border: none;
+              }
+              
+              ::-webkit-scrollbar-thumb:hover {
+                background: #9ca3af;
+              }
+              
+              ::-webkit-scrollbar-thumb:active {
+                background: #6b7280;
+              }
+              
+              ::-webkit-scrollbar-corner {
+                background: transparent;
+              }
+              
+              /* Firefox scrollbar */
+              * {
+                scrollbar-width: thin;
+                scrollbar-color: #d1d5db transparent;
+              }
+              
+              /* Specific scrollbar styling for editor and sidebar */
+              .editor-scroll::-webkit-scrollbar {
+                width: 6px;
+              }
+              
+              .editor-scroll::-webkit-scrollbar-thumb {
+                background: #cbd5e1;
+                border-radius: 3px;
+              }
+              
+              .editor-scroll::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+              }
+              
+              .sidebar-scroll::-webkit-scrollbar {
+                width: 6px;
+              }
+              
+              .sidebar-scroll::-webkit-scrollbar-thumb {
+                background: #e2e8f0;
+                border-radius: 3px;
+              }
+              
+              .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+                background: #cbd5e1;
+              }
             `}} />
             {/* Editable area with feedback prompt after Enter */}
             <div
@@ -1011,37 +1094,72 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
             {/* Feedback prompt, shown only after Enter - updated look */}
             {showFeedback && feedbackLineIdx !== null && lines[feedbackLineIdx] && (
               <div
-                className="absolute left-1/2 transform -translate-x-1/2 top-24 w-[420px] bg-white border rounded-2xl shadow-xl z-50 p-6 transition-all duration-300 ease-in-out"
-                style={{ pointerEvents: 'auto', boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
-                onClick={(e) => e.stopPropagation()} // Prevent close on card click
+                className="absolute left-1/2 transform -translate-x-1/2 top-24 w-[540px] bg-white border rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-in-out"
+                style={{ pointerEvents: 'auto', boxShadow: '0 8px 32px rgba(0,0,0,0.12)' }}
+                onClick={(e) => e.stopPropagation()}
               >
-                <button 
-                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                  onClick={() => setShowFeedback(false)}
-                >
-                  ×
-                </button>
-                <div className="flex gap-4 mb-4 justify-center">
-                  <ScoreBar label="Legal" score={legalScore} />
-                  <ScoreBar label="Contractual" score={contractualScore} />
-                  <ScoreBar label="Lexical" score={lexicalScore} />
-                  <ScoreBar label="Grammatical" score={grammaticalScore} />
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 pb-4 border-b border-gray-100">
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-lg">Writing Analysis</h3>
+                    <p className="text-sm text-gray-500 mt-1">Real-time feedback for your last sentence</p>
+                  </div>
+                  <button 
+                    className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                    onClick={() => setShowFeedback(false)}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
-                <div className="mb-4">
-                  <span className="font-semibold text-gray-800">Suggestions:</span>
-                  <ul className="list-disc ml-6 mt-2 text-sm text-gray-700 space-y-1">
+                
+                {/* Score Cards */}
+                <div className="p-6 pb-4">
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <ScoreBar label="Legal" score={legalScore} />
+                    <ScoreBar label="Contractual" score={contractualScore} />
+                    <ScoreBar label="Lexical" score={lexicalScore} />
+                    <ScoreBar label="Grammatical" score={grammaticalScore} />
+                  </div>
+                  
+                  {/* Suggestions */}
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" className="text-blue-600">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      <span className="font-semibold text-gray-800 text-sm">Suggestions</span>
+                    </div>
                     {suggestions.length > 0 ? (
-                      suggestions.map((sugg, idx) => (
-                        <li key={idx}>{sugg}</li>
-                      ))
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {suggestions.map((sugg, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-blue-600 mt-1">•</span>
+                            <span>{sugg}</span>
+                          </li>
+                        ))}
+                      </ul>
                     ) : (
-                      <li>No suggestions available.</li>
+                      <p className="text-sm text-gray-500 italic">No suggestions available for this sentence.</p>
                     )}
-                  </ul>
+                  </div>
                 </div>
-                <div className="flex gap-2 justify-end">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-700 transition" onClick={applyCorrections}>Accept</button>
-                  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md font-semibold hover:bg-gray-300 transition" onClick={() => setShowFeedback(false)}>Dismiss</button>
+                
+                {/* Actions */}
+                <div className="flex gap-3 justify-end p-6 pt-0">
+                  <button 
+                    className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg font-medium hover:bg-gray-200 transition-colors" 
+                    onClick={() => setShowFeedback(false)}
+                  >
+                    Dismiss
+                  </button>
+                  <button 
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors shadow-sm" 
+                    onClick={applyCorrections}
+                  >
+                    Apply Suggestions
+                  </button>
                 </div>
               </div>
             )}
@@ -1092,28 +1210,56 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
 
         {/* Industry standard resizer handle */}
         <div
-          className="group flex items-center justify-center"
-          style={{ width: 32, cursor: 'col-resize', zIndex: 10, position: 'relative', background: 'transparent' }}
-          onMouseDown={() => { 
+          className="group flex items-center justify-center hover:bg-gray-50 transition-all duration-200 select-none"
+          style={{ 
+            width: 32, 
+            cursor: 'col-resize', 
+            zIndex: 10, 
+            position: 'relative',
+            background: 'transparent'
+          }}
+          onMouseDown={(e) => { 
+            e.preventDefault();
+            e.stopPropagation();
             isResizing.current = true;
-            document.body.style.cursor = 'col-resize';
-            document.body.style.userSelect = 'none';
+          }}
+          onMouseUp={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
           }}
         >
+          {/* Invisible wider hit area for easier grabbing */}
+          <div 
+            className="absolute inset-0 cursor-col-resize select-none"
+            style={{ 
+              left: '-8px', 
+              right: '-8px', 
+              width: '48px',
+              height: '100%'
+            }}
+            onMouseDown={(e) => { 
+              e.preventDefault();
+              e.stopPropagation();
+              isResizing.current = true;
+            }}
+          />
+          
+          {/* Visual handle */}
           <div
-            className="transition-all duration-150 bg-gray-200 group-hover:bg-blue-200 rounded-full flex items-center justify-center shadow-sm"
-            style={{ width: 20, height: 48 }}
+            className="transition-all duration-200 bg-gray-300 group-hover:bg-blue-400 rounded-full flex items-center justify-center shadow-sm relative z-10 select-none"
+            style={{ width: 4, height: 60 }}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="4" y1="10" x2="16" y2="10" />
-              <polyline points="8 6 4 10 8 14" />
-              <polyline points="12 6 16 10 12 14" />
-            </svg>
+            {/* Grip dots */}
+            <div className="flex flex-col gap-1">
+              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
+              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
+              <div className="w-1 h-1 bg-white rounded-full opacity-80"></div>
+            </div>
           </div>
         </div>
 
         {/* Sidebar */}
-        <div className="flex-1 bg-white border-l border-gray-200 overflow-y-auto" style={{ minWidth: '320px' }}>
+        <div className="flex-1 bg-white border-l border-gray-200 overflow-y-auto sidebar-scroll" style={{ minWidth: '320px' }}>
         
         <EditorSidebar
             sidebarTab={sidebarTab}
