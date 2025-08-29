@@ -17,6 +17,7 @@ import ProjectManagement from "./components/ProjectManagement";
 import SequenceOfEvent from "./components/SequenceOfEvent";
 import Editor from "./pages/editor";
 import {TableView} from "./components/seqcomponents/TableView";
+import CorrespondingLettersPage from "./components/CorrespondingLettersPage";
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -131,7 +132,7 @@ const AppContent: React.FC = () => {
           path="/corresponding-letters"
           element={
             isAuthenticated ? (
-              <TableView />
+              <CorrespondingLettersPage />
             ) : (
               <SignInPage onNavigate={handleNavigate} />
             )
