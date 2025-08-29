@@ -151,7 +151,9 @@ const App: React.FC = () => {
       domain={import.meta.env.VITE_AUTH0_DOMAIN || ""}
       clientId={import.meta.env.VITE_AUTH0_CLIENT_ID || ""}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: import.meta.env.PROD
+          ? `${window.location.origin}/contractor-hub`
+          : window.location.origin,
       }}
     >
       <Router>
