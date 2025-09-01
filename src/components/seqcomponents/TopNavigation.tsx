@@ -15,7 +15,7 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({ currentPage, onNav
     <nav className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-4 shadow-lg">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold">Project Communication Hub</h1>
+          <h1 className="text-heading-2 font-heading-2">Project Communication Hub</h1>
         </div>
         <div className="hidden md:flex items-center space-x-6">
           <button 
@@ -52,10 +52,10 @@ export const TopNavigation: React.FC<TopNavigationProps> = ({ currentPage, onNav
       </div>
       {isMenuOpen && (
         <div className="md:hidden mt-4 space-y-2">
-          <button onClick={() => onNavigate('dashboard')} className="block py-2 hover:text-blue-200">Dashboard</button>
-          <button onClick={() => onNavigate('timeline')} className="block py-2 hover:text-blue-200">Timeline</button>
-          <button onClick={() => onNavigate('table')} className="block py-2 hover:text-blue-200">Table</button>
-          <button onClick={() => onNavigate('drafting')} className="block py-2 hover:text-blue-200">Drafting</button>
+          <button onClick={() => onNavigate('dashboard')} className="block py-2 hover:text-blue-200 font-body">Dashboard</button>
+          <button onClick={() => onNavigate('timeline')} className="block py-2 hover:text-blue-200 font-body">Timeline</button>
+          <button onClick={() => onNavigate('table')} className="block py-2 hover:text-blue-200 font-body">Table</button>
+          <button onClick={() => onNavigate('drafting')} className="block py-2 hover:text-blue-200 font-body">Drafting</button>
         </div>
       )}
     </nav>

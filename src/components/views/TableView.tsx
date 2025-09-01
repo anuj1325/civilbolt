@@ -78,7 +78,7 @@ const TableView: React.FC = () => {
   const SortButton = ({ field, children }: { field: keyof Task; children: React.ReactNode }) => (
     <button
       onClick={() => handleSort(field)}
-      className="flex items-center space-x-1 text-left font-medium text-gray-700 hover:text-gray-900"
+      className="flex items-center space-x-1 text-left font-body-bold text-gray-700 hover:text-gray-900"
     >
       <span>{children}</span>
       {sortField === field && (
@@ -93,8 +93,8 @@ const TableView: React.FC = () => {
     <div className="bg-white">
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Table</h2>
-          <p className="text-gray-600 mt-1">{tasks.length} tasks in structured view</p>
+          <h2 className="text-heading-2 font-heading-2 text-gray-900">Table</h2>
+          <p className="text-body font-body text-gray-600 mt-1">{tasks.length} tasks in structured view</p>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -102,25 +102,25 @@ const TableView: React.FC = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="title">Task</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="status">Status</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="priority">Priority</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="assignee">Assignee</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="startDate">Start Date</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     <SortButton field="endDate">Due Date</SortButton>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-caption font-caption text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -139,20 +139,20 @@ const TableView: React.FC = () => {
                           style={{ backgroundColor: task.color }}
                         />
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{task.title}</div>
+                          <div className="text-body font-body-bold text-gray-900">{task.title}</div>
                           {task.description && (
-                            <div className="text-sm text-gray-500">{task.description}</div>
+                            <div className="text-body font-body text-gray-500">{task.description}</div>
                           )}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColors[task.status]}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-caption ${statusColors[task.status]}`}>
                         {task.status === 'in-progress' ? 'In Progress' : task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityColors[task.priority]}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-caption ${priorityColors[task.priority]}`}>
                         <Flag className="w-3 h-3 mr-1" />
                         {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                       </span>
@@ -161,27 +161,27 @@ const TableView: React.FC = () => {
                       {task.assignee && (
                         <div className="flex items-center space-x-2">
                           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <span className="text-sm font-medium text-white">
+                            <span className="text-body font-body-bold text-white">
                               {task.assignee.charAt(0).toUpperCase()}
                             </span>
                           </div>
-                          <span className="text-sm text-gray-900">{task.assignee}</span>
+                          <span className="text-body font-body text-gray-900">{task.assignee}</span>
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body font-body text-gray-900">
                       {formatDate(task.startDate)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body font-body text-gray-900">
                       {formatDate(task.endDate)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-body font-body-bold">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleTaskClick(task);
                         }}
-                        className="text-gray-400 hover:text-gray-600"
+                        className="text-body font-body text-gray-400 hover:text-gray-600"
                       >
                         <MoreHorizontal className="w-5 h-5" />
                       </button>

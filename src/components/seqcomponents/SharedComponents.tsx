@@ -23,9 +23,9 @@ export const OverdueBadge: React.FC<{ isOverdue: boolean }> = ({ isOverdue }) =>
   if (!isOverdue) return null;
   
   return (
-    <div className="flex items-center space-x-1 text-red-600 text-caption">
+    <div className="flex items-center space-x-1 text-red-600 text-caption font-caption">
       <AlertTriangle size={12} />
-      <span className="text-body">OVERDUE</span>
+      <span className="text-body font-body">OVERDUE</span>
     </div>
   );
 };
@@ -99,10 +99,10 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-heading-2 text-gray-800">Generate Summary</h2>
+            <h2 className="text-heading-2 font-heading-2 text-gray-800">Generate Summary</h2>
             <button 
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 text-heading-1"
+              className="text-gray-500 hover:text-gray-700 text-heading-1 font-heading-1"
             >
               ×
             </button>
@@ -110,16 +110,16 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
           
           {/* Letter Reference */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h3 className="text-heading-3 text-gray-800 mb-2">Reference Letter:</h3>
-            <p className="text-body text-gray-600 mb-1">{letter.letterNo} - {letter.subject}</p>
-            <p className="text-caption text-gray-500">From: {letter.from} | Date: {new Date(letter.date).toLocaleDateString()}</p>
+            <h3 className="text-heading-3 font-heading-3 text-gray-800 mb-2">Reference Letter:</h3>
+            <p className="text-body font-body text-gray-600 mb-1">{letter.letterNo} - {letter.subject}</p>
+            <p className="text-caption font-caption text-gray-500">From: {letter.from} | Date: {new Date(letter.date).toLocaleDateString()}</p>
           </div>
           
           {/* Word Count Slider */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-3">
-              <label className="text-body-bold text-gray-700">Summary Length:</label>
-              <span className="text-sm font-semibold text-blue-600">{wordCount} words</span>
+              <label className="text-body-bold font-body-bold text-gray-700">Summary Length:</label>
+              <span className="text-body-bold font-body-bold text-blue-600">{wordCount} words</span>
             </div>
             
             <div className="relative">
@@ -135,7 +135,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
                   background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${((wordCount - 50) / 450) * 100}%, #e5e7eb ${((wordCount - 50) / 450) * 100}%, #e5e7eb 100%)`
                 }}
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <div className="flex justify-between text-caption font-caption text-gray-500 mt-1">
                 <span>50</span>
                 <span>150</span>
                 <span>300</span>
@@ -149,7 +149,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
             <button
               onClick={handleGenerateSummary}
               disabled={isGenerating}
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed font-medium"
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed font-body-bold"
             >
               {isGenerating ? 'Generating Summary...' : 'Generate Summary'}
             </button>
@@ -158,15 +158,15 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
           {/* Generated Summary */}
           {(generatedSummary || isGenerating) && (
             <div className="mb-6">
-              <h3 className="font-semibold text-gray-800 mb-3">Generated Summary:</h3>
+              <h3 className="font-heading-3 text-gray-800 mb-3">Generated Summary:</h3>
               <div className="p-4 border rounded-lg bg-gray-50 min-h-[120px]">
                 {isGenerating ? (
                   <div className="flex items-center justify-center h-full">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                    <span className="ml-3 text-gray-600">Generating...</span>
+                    <span className="ml-3 text-body font-body text-gray-600">Generating...</span>
                   </div>
                 ) : (
-                  <p className="text-sm text-gray-700 leading-relaxed">{generatedSummary}</p>
+                  <p className="text-body font-body text-gray-700 leading-relaxed">{generatedSummary}</p>
                 )}
               </div>
               
@@ -174,13 +174,13 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
                 <div className="flex space-x-2 mt-3">
                   <button
                     onClick={handleCopy}
-                    className="px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700"
+                    className="px-4 py-2 bg-green-600 text-white text-body font-body rounded hover:bg-green-700"
                   >
                     Copy Summary
                   </button>
                   <button
                     onClick={handleGenerateSummary}
-                    className="px-4 py-2 bg-gray-600 text-white text-sm rounded hover:bg-gray-700"
+                    className="px-4 py-2 bg-gray-600 text-white text-body font-body rounded hover:bg-gray-700"
                   >
                     Regenerate
                   </button>
@@ -193,7 +193,7 @@ export const SummaryModal: React.FC<SummaryModalProps> = ({ letter, isOpen, onCl
           <div className="flex justify-end">
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+              className="px-6 py-2 bg-gray-300 text-body font-body text-gray-700 rounded hover:bg-gray-400"
             >
               Close
             </button>

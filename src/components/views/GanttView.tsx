@@ -81,8 +81,8 @@ const GanttView: React.FC = () => {
     <div className="bg-white">
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Gantt Chart</h2>
-          <p className="text-gray-600 mt-1">Timeline view of all tasks</p>
+          <h2 className="text-heading-2 font-heading-2 text-gray-900">Gantt Chart</h2>
+          <p className="text-body font-body text-gray-600 mt-1">Timeline view of all tasks</p>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
@@ -90,10 +90,10 @@ const GanttView: React.FC = () => {
             <div className="min-w-full">
               {/* Header */}
               <div className="flex border-b border-gray-200">
-                <div className="w-80 px-6 py-3 bg-gray-50 text-sm font-medium text-gray-700 border-r border-gray-200 flex-shrink-0">
+                <div className="w-80 px-6 py-3 bg-gray-50 text-body font-body-bold text-gray-700 border-r border-gray-200 flex-shrink-0">
                   Task
                 </div>
-                <div className="w-48 px-6 py-3 bg-gray-50 text-sm font-medium text-gray-700 border-r border-gray-200 flex items-center flex-shrink-0">
+                <div className="w-48 px-6 py-3 bg-gray-50 text-body font-body-bold text-gray-700 border-r border-gray-200 flex items-center flex-shrink-0">
                   Assignee(s)
                 </div>
                 <div className="flex-1 bg-gray-50">
@@ -101,11 +101,11 @@ const GanttView: React.FC = () => {
                     {dateHeaders.map((date, index) => (
                       <div
                         key={index}
-                        className="flex-1 px-2 py-3 text-xs text-center text-gray-600 border-r border-gray-200"
+                        className="flex-1 px-2 py-3 text-caption font-caption text-center text-gray-600 border-r border-gray-200"
                         style={{ minWidth: '40px' }}
                       >
                         <div>{formatDate(date)}</div>
-                        <div className="text-gray-400">{date.getDate()}</div>
+                        <div className="text-caption font-caption text-gray-400">{date.getDate()}</div>
                       </div>
                     ))}
                   </div>
@@ -123,10 +123,10 @@ const GanttView: React.FC = () => {
                           style={{ backgroundColor: task.color }}
                         />
                         <div className="min-w-0 flex-1">
-                          <div className="text-sm font-medium text-gray-900 truncate">
+                          <div className="text-body font-body-bold text-gray-900 truncate">
                             {task.title}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-caption font-caption text-gray-500">
                             {formatTaskDate(task.startDate)} - {formatTaskDate(task.endDate)}
                           </div>
                         </div>
@@ -136,18 +136,18 @@ const GanttView: React.FC = () => {
                       {task.assignee ? (
                         <div className="flex items-center space-x-3 w-full">
                           <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                            <span className="text-xs font-medium text-white">
+                            <span className="text-caption font-caption text-white">
                               {task.assignee.charAt(0).toUpperCase()}
                             </span>
                           </div>
-                          <span className="text-sm text-gray-700 truncate">{task.assignee}</span>
+                          <span className="text-body font-body text-gray-700 truncate">{task.assignee}</span>
                         </div>
                       ) : (
                         <div className="flex items-center space-x-3 w-full">
                           <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center">
-                            <span className="text-xs font-medium text-gray-500">?</span>
+                            <span className="text-caption font-caption text-gray-500">?</span>
                           </div>
-                          <span className="text-sm text-gray-400 truncate">Unassigned</span>
+                          <span className="text-body font-body text-gray-400 truncate">Unassigned</span>
                         </div>
                       )}
                     </div>
@@ -163,7 +163,7 @@ const GanttView: React.FC = () => {
                         }}
                         onClick={() => handleTaskClick(task)}
                       >
-                        <span className="text-white text-xs font-medium px-2 truncate">
+                        <span className="text-white text-caption font-caption px-2 truncate">
                           {task.title}
                         </span>
                       </div>

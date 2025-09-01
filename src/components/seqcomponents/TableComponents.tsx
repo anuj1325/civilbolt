@@ -38,7 +38,7 @@ export const defaultSequenceColumns: ColumnConfig<SequenceOfEvents>[] = [
   { key: 'keyDocuments', header: 'Key Documents', visible: true, width: '140px', render: (sequence) => (
     <div className="flex items-center space-x-1">
       <Eye size={14} className="text-blue-500 hover:text-blue-700 cursor-pointer" />
-      <span className="text-xs text-gray-600">
+      <span className="text-caption font-caption text-gray-600">
         {sequence.keyDocuments.length} doc{sequence.keyDocuments.length !== 1 ? 's' : ''}
       </span>
     </div>
@@ -171,7 +171,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
         <div className="flex space-x-4">
           {/* Filter Controls */}
           <select 
-            className="px-3 py-2 border rounded-md text-sm"
+            className="px-3 py-2 border rounded-md text-body font-body"
             value={config.filterConfig.phase || 'all'}
             onChange={(e) => handleFilterChange('phase', e.target.value)}
           >
@@ -182,7 +182,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
           </select>
 
           <select 
-            className="px-3 py-2 border rounded-md text-sm"
+            className="px-3 py-2 border rounded-md text-body font-body"
             value={config.filterConfig.status || 'all'}
             onChange={(e) => handleFilterChange('status', e.target.value)}
           >
@@ -195,7 +195,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
           </select>
 
           <select 
-            className="px-3 py-2 border rounded-md text-sm"
+            className="px-3 py-2 border rounded-md text-body font-body"
             value={config.filterConfig.priority || 'all'}
             onChange={(e) => handleFilterChange('priority', e.target.value)}
           >
@@ -215,7 +215,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
             className="flex items-center space-x-2 px-3 py-2 border rounded-md hover:bg-gray-50"
           >
             <Settings size={16} />
-            <span className="text-sm">Columns</span>
+            <span className="text-body font-body">Columns</span>
           </button>
 
           {/* Column Settings Dropdown Overlay */}
@@ -229,7 +229,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
               
               {/* Dropdown Panel */}
               <div className="absolute right-0 top-full mt-2 z-50 bg-gray-50 p-4 rounded-md border shadow-lg min-w-80">
-                <h4 className="font-medium mb-3">Configure Columns</h4>
+                <h4 className="font-body-bold mb-3">Configure Columns</h4>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                   {config.columns.map(column => (
                     <label key={String(column.key)} className="flex items-center space-x-2">
@@ -239,7 +239,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
                         onChange={() => toggleColumnVisibility(String(column.key))}
                         className="rounded"
                       />
-                      <span className="text-sm">{column.header}</span>
+                      <span className="text-body font-body">{column.header}</span>
                     </label>
                   ))}
                 </div>
@@ -294,14 +294,14 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
                     if (column.key === 'id') return index + 1;
                     if (column.key === 'sequenceTitle') {
                       return (
-                        <div className="max-w-xs truncate font-medium" title={sequence.sequenceTitle}>
+                        <div className="max-w-xs truncate font-body-bold" title={sequence.sequenceTitle}>
                           {sequence.sequenceTitle}
                         </div>
                       );
                     }
                     if (column.key === 'phase') {
                       return (
-                        <span className={`px-2 py-1 rounded text-xs ${
+                        <span className={`px-2 py-1 rounded text-caption font-caption ${
                           sequence.phase === 'Pre-Contract Phase' ? 'bg-purple-100 text-purple-800' :
                           sequence.phase === 'Contract Execution Phase' ? 'bg-blue-100 text-blue-800' :
                           sequence.phase === 'Operational Phase' ? 'bg-green-100 text-green-800' :
@@ -313,7 +313,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
                     }
                     if (column.key === 'description') {
                       return (
-                        <div className="max-w-sm truncate text-sm" title={sequence.description}>
+                        <div className="max-w-sm truncate text-body font-body" title={sequence.description}>
                           {sequence.description}
                         </div>
                       );

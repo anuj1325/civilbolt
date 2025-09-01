@@ -50,13 +50,13 @@ const Header: React.FC<HeaderProps> = ({ currentView, onViewChange, onAddTask })
         </div>
 
         <div className="flex items-center space-x-3 flex-shrink-0 ml-4">
-          <button className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 whitespace-nowrap">
+          <button className="flex items-center space-x-2 px-3 py-2 text-body font-body text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 whitespace-nowrap">
             <Filter className="w-4 h-4" />
             <span>Filter</span>
           </button>
           <button
             onClick={onAddTask}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
+            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-body font-body-bold text-white rounded-lg hover:bg-blue-700 transition-colors whitespace-nowrap"
           >
             <Plus className="w-4 h-4" />
             <span>Add Task</span>

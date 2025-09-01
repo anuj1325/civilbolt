@@ -60,14 +60,14 @@ function SelectExistingProject({
         <Component4 text="Iron Triangle Limited" />
         <div className="flex w-full grow shrink-0 basis-0 flex-col items-start rounded-md border border-solid border-neutral-border bg-default-background shadow-sm">
           <div className="container max-w-none flex w-full grow shrink-0 basis-0 flex-col items-start gap-8 bg-default-background py-8">
-            <div className="flex w-full items-center justify-between rounded-lg border border-dashed border-brand-600 bg-brand-50 px-6 py-6 bg-gradient-to-r from-highlight-green to-highlight-cyan-900 relative">
+            <div className="flex w-full items-center justify-between rounded-lg border border-solid border-default-font bg-brand-50 px-6 py-6 bg-inherit">
               <div className="flex items-center gap-4">
                 <IconWithBackground size="large" icon="FeatherPlus" />
                 <div className="flex flex-col items-start gap-1">
-                  <span className="text-heading-2 font-heading-2 text-white">
+                  <span className="text-heading-2 font-heading-2 text-default-font">
                     Create New Project
                   </span>
-                  <span className="text-body font-body text-white">
+                  <span className="text-body font-body text-custom-palette-subtext-color">
                     Start a new construction project from scratch
                   </span>
                 </div>

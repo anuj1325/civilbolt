@@ -67,7 +67,7 @@ export const LetterCard: React.FC<LetterCardProps> = ({ letter, isExpanded, onTo
         {/* Attachments - Always visible */}
         {letter.attachments.length > 0 && (
           <div className="mt-3">
-            <h4 className="text-caption text-caption-bold text-gray-700 mb-2 flex items-center">
+            <h4 className="text-caption-bold text-gray-700 mb-2 flex items-center">
               <FileText size={12} className="mr-1" />
               Attachments ({letter.attachments.length})
             </h4>
@@ -180,7 +180,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event, isExpanded, onToggl
       <div className={`bg-white rounded-lg shadow-md border-l-4 ${isContractor ? 'border-l-blue-500' : 'border-l-green-500'} p-4 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`} onClick={handleCardClick}>
         <div className="flex justify-between items-start mb-2">
           <div className="flex-1">
-            <h3 className="font-bold text-gray-800 text-sm">{event.subject}</h3>
+            <h3 className="font-heading-3 text-gray-800 text-body">{event.subject}</h3>
             <p className="text-caption text-gray-500 mt-1">{event.letterNo}</p>
           </div>
           <div className="flex flex-col items-end space-y-1">

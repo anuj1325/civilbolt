@@ -45,13 +45,13 @@ const ListView: React.FC = () => {
     <div className="bg-white">
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Task List</h2>
-          <p className="text-gray-600 mt-1">{tasks.length} tasks total</p>
+          <h2 className="text-heading-2 font-heading-2 text-gray-900">Task List</h2>
+          <p className="text-body font-body text-gray-600 mt-1">{tasks.length} tasks total</p>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-700">
+            <div className="grid grid-cols-12 gap-4 text-body font-body-bold text-gray-700">
               <div className="col-span-4">Task</div>
               <div className="col-span-2">Status</div>
               <div className="col-span-2">Priority</div>
@@ -75,22 +75,22 @@ const ListView: React.FC = () => {
                         style={{ backgroundColor: task.color }}
                       />
                       <div>
-                        <h3 className="text-sm font-medium text-gray-900">{task.title}</h3>
+                        <h3 className="text-body font-body-bold text-gray-900">{task.title}</h3>
                         {task.description && (
-                          <p className="text-sm text-gray-500 mt-1">{task.description}</p>
+                          <p className="text-body font-body text-gray-500 mt-1">{task.description}</p>
                         )}
                       </div>
                     </div>
                   </div>
 
                   <div className="col-span-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColors[task.status]}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-caption ${statusColors[task.status]}`}>
                       {task.status === 'in-progress' ? 'In Progress' : task.status.charAt(0).toUpperCase() + task.status.slice(1)}
                     </span>
                   </div>
 
                   <div className="col-span-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityColors[task.priority]}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-caption ${priorityColors[task.priority]}`}>
                       <Flag className="w-3 h-3 mr-1" />
                       {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                     </span>
@@ -100,7 +100,7 @@ const ListView: React.FC = () => {
                     {task.assignee && (
                       <div className="flex items-center space-x-2">
                         <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-xs font-medium text-white">
+                          <span className="text-caption font-caption text-white">
                             {task.assignee.charAt(0).toUpperCase()}
                           </span>
                         </div>

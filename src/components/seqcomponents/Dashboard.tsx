@@ -106,8 +106,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onEventClick, 
   return (
     <div className="p-2">
       <div className="mb-8">
-        <h1 className="text-heading-3 text-gray-800 mb-2">Project Sequence Dashboard</h1>
-        <p className="text-gray-700">Track project milestones and sequence of events from pre-contract to closure</p>
+        <h1 className="text-heading-3 font-body-bold text-gray-800 mb-2">Project Sequence Dashboard</h1>
+        <p className="text-body font-body text-gray-700">Track project milestones and sequence of events from pre-contract to closure</p>
       </div>
       
       {/* Stats Grid - Multi-column layout with less space */}

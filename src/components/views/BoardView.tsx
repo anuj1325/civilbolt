@@ -64,8 +64,8 @@ const BoardView: React.FC = () => {
     <div className="bg-gray-50 min-h-screen">
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Board</h2>
-          <p className="text-gray-600 mt-1">Manage tasks across different stages</p>
+          <h2 className="text-heading-2 font-heading-2 text-gray-900">Board</h2>
+          <p className="text-body font-body text-gray-600 mt-1">Manage tasks across different stages</p>
         </div>
 
         <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>

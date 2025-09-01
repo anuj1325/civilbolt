@@ -57,12 +57,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onClick, isDragging = false }
         <Flag className={`w-4 h-4 ${priorityColors[task.priority]}`} />
       </div>
 
-      <h3 className="text-body-bold text-gray-900 mb-2 line-clamp-2">
+      <h3 className="text-body-bold font-body text-gray-900 mb-2 line-clamp-2">
         {task.title}
       </h3>
 
       {task.description && (
-        <p className="text-caption text-gray-600 mb-3 line-clamp-2">
+        <p className="text-caption font-caption text-gray-600 mb-3 line-clamp-2">
           {task.description}
         </p>
       )}

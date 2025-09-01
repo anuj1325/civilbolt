@@ -69,7 +69,7 @@ const CalendarView: React.FC = () => {
         {`
           .rbc-calendar {
             height: calc(100vh - 200px);
-            font-family: inherit;
+            font-family: "Bookman Old Style", "Georgia", "Times New Roman", serif;
           }
           .rbc-header {
             background-color: #f8fafc;
@@ -106,8 +106,8 @@ const CalendarView: React.FC = () => {
 
       <div className="p-6">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Calendar</h2>
-          <div className="text-sm text-gray-600">
+          <h2 className="text-heading-2 font-heading-2 text-gray-900">Calendar</h2>
+          <div className="text-body font-body text-gray-600">
             August 2025
           </div>
         </div>

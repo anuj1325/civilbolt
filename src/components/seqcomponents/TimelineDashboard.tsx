@@ -37,9 +37,9 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
     return (
       <div className="fixed top-4 right-4 z-50 bg-red-50 border border-red-200 rounded-lg p-2 max-w-xs cursor-pointer shadow-lg" onClick={onMinimize}>
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-red-700">
+          <div className="flex items-center space-x-2 text-red-700 font-body">
             <Bell size={14} />
-            <span className="text-caption-bold">{overdueEvents.length} Overdue</span>
+            <span className="text-caption-bold font-caption-bold">{overdueEvents.length} Overdue</span>
           </div>
           <button 
             onClick={(e) => { e.stopPropagation(); onDismiss(); }}
@@ -62,30 +62,30 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
         <div className="flex items-center space-x-1">
           <button 
             onClick={onMinimize}
-            className="text-red-500 hover:text-red-700 text-body p-1"
+            className="text-red-500 hover:text-red-700 text-body font-body p-1"
             title="Minimize"
           >
             −
           </button>
           <button 
             onClick={onDismiss}
-            className="text-red-500 hover:text-red-700 text-body p-1"
+            className="text-red-500 hover:text-red-700 text-body font-body p-1"
             title="Dismiss"
           >
             ×
           </button>
         </div>
       </div>
-      <p className="text-caption text-red-600 mb-2">
+      <p className="text-caption font-caption text-red-600 mb-2">
         {overdueEvents.length} event(s) are overdue. Consider drafting follow-up letters to authorities.
       </p>
-      <div className="text-caption text-red-500 mb-2">
+      <div className="text-caption font-caption text-red-500 mb-2">
         Overdue items: {overdueEvents.map(e => e.letterNo).join(', ')}
       </div>
       <div className="flex space-x-2">
         <button 
           onClick={onDraftLetters}
-          className="text-caption bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+          className="text-caption font-caption bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
         >
           Draft Letters
         </button>
@@ -171,26 +171,26 @@ export const TimelineDashboard: React.FC<TimelineDashboardProps> = ({
           <div className="grid grid-cols-3 gap-4">
             {/* Title and Info Section */}
             <div className="col-span-2">
-              <h1 className="text-heading-3 text-gray-800 mb-2">
+              <h1 className="text-heading-3 font-heading-3 text-gray-800 mb-2">
                 {selectedSequence ? 'Sequence Letters & Communications' : 
                  selectedEvent ? 'Related Letters & Communications' : 'Sequence of Events'}
               </h1>
               {selectedSequence && (
                 <div className="mb-2">
-                  <p className="text-blue-600 text-xs font-medium">
+                  <p className="text-blue-600 text-caption font-caption">
                     {selectedSequence.sequenceTitle} | {selectedSequence.phase}
                   </p>
-                  <p className="text-green-600 text-xs">
+                  <p className="text-green-600 text-caption font-caption">
                     {relatedLetters.length} letter{relatedLetters.length !== 1 ? 's' : ''}
                   </p>
                 </div>
               )}
               {selectedEvent && !selectedSequence && (
                 <div className="mb-2">
-                  <p className="text-blue-600 text-xs font-medium">
+                  <p className="text-blue-600 text-caption font-caption">
                     {selectedEvent.eventTitle} | {selectedEvent.letterNo}
                   </p>
-                  <p className="text-green-600 text-xs">
+                  <p className="text-green-600 text-caption font-caption">
                     {relatedLetters.length} letter{relatedLetters.length !== 1 ? 's' : ''}
                   </p>
                 </div>
@@ -203,7 +203,7 @@ export const TimelineDashboard: React.FC<TimelineDashboardProps> = ({
                     <button
                       key={view.id}
                       onClick={() => setActiveView(view.id)}
-                      className={`px-2 py-1 rounded-md text-body-bold transition-all ${activeView === view.id ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
+                      className={`px-2 py-1 rounded-md text-body-bold font-body-bold transition-all ${activeView === view.id ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'}`}
                     >
                       {view.label}
                     </button>
@@ -218,9 +218,9 @@ export const TimelineDashboard: React.FC<TimelineDashboardProps> = ({
                 <input
                   type="text"
                   placeholder="Search or ask AI..."
-                  className="flex-1 px-4 py-2 rounded-l-full focus:outline-none text-gray-700 text-sm"
+                  className="flex-1 px-4 py-2 rounded-l-full focus:outline-none text-gray-700 text-body font-body"
                 />
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 transition-colors text-sm font-medium">
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-r-full hover:bg-blue-700 transition-colors text-body font-body">
                   Ask AI
                 </button>
               </div>
