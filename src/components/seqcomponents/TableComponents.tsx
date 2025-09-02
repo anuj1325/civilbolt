@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { FileText, ChevronUp, ChevronDown, Settings, Filter, Eye, EyeOff } from 'lucide-react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
+import { FileText, ChevronUp, ChevronDown, Settings, Filter, Eye, EyeOff, X, Check } from 'lucide-react';
 import { Event, SequenceOfEvents, ColumnConfig, EventTableProps, SequenceTableProps, SortConfig, FilterConfig, TableConfig } from '@/types';
 import { PriorityBadge, OverdueBadge, SequenceStatusBadge } from './SharedComponents';
 import {
@@ -31,7 +31,7 @@ export const defaultSequenceColumns: ColumnConfig<SequenceOfEvents>[] = [
   { key: 'phase', header: 'Phase', sortable: true, filterable: true, visible: true, width: '180px' },
   { key: 'category', header: 'Category', sortable: true, filterable: true, visible: true, width: '150px' },
   { key: 'description', header: 'Description', visible: true, width: '300px' },
-  { key: 'status', header: 'Status', sortable: true, filterable: true, visible: false, width: '120px', render: (sequence) => <SequenceStatusBadge status={sequence.status} /> },
+  { key: 'status', header: 'Status', sortable: true, filterable: true, visible: true, width: '120px', render: (sequence) => <SequenceStatusBadge status={sequence.status} /> },
   { key: 'priority', header: 'Priority', sortable: true, filterable: true, visible: true, width: '100px', render: (sequence) => <PriorityBadge priority={sequence.priority} /> },
   { key: 'expectedDuration', header: 'Duration', sortable: true, visible: true, width: '120px' },
   { key: 'targetDate', header: 'Target Date', sortable: true, visible: true, width: '120px', render: (sequence) => sequence.targetDate ? new Date(sequence.targetDate).toLocaleDateString() : '-' },
@@ -71,7 +71,7 @@ export const EventTable: React.FC<EventTableProps> = ({ data, columns = eventCol
   );
 };
 
-// Enhanced Sequence Table Component with sorting, filtering, and configurable columns
+// Enhanced Sequence Table Component with inline filters, multi-select chips, improved sorting, and configurable columns
 export const SequenceTable: React.FC<SequenceTableProps> = ({ 
   data, 
   onSequenceClick, 
@@ -86,19 +86,45 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
     showColumnSettings: false
   }));
 
+  const [activeFilters, setActiveFilters] = useState<{[key: string]: string[]}>({});
+  const [openFilterDropdown, setOpenFilterDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const config = tableConfig || internalConfig;
   const setConfig = onTableConfigChange || setInternalConfig;
 
-  // Filter data based on current filter config
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenFilterDropdown(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Get unique values for filters
+  const uniqueValues = useMemo(() => ({
+    phase: [...new Set(data.map(item => item.phase))],
+    category: [...new Set(data.map(item => item.category))],
+    status: [...new Set(data.map(item => item.status))],
+    priority: [...new Set(data.map(item => item.priority))]
+  }), [data]);
+
+  // Filter data based on multi-select filters
   const filteredData = useMemo(() => {
     return data.filter(sequence => {
-      return Object.entries(config.filterConfig).every(([key, value]) => {
-        if (!value || value === 'all') return true;
+      return Object.entries(activeFilters).every(([key, values]) => {
+        if (!values || values.length === 0) return true;
         const sequenceValue = sequence[key as keyof SequenceOfEvents];
-        return String(sequenceValue).toLowerCase().includes(String(value).toLowerCase());
+        return values.includes(String(sequenceValue));
       });
     });
-  }, [data, config.filterConfig]);
+  }, [data, activeFilters]);
 
   // Sort data based on current sort config
   const sortedData = useMemo(() => {
@@ -136,14 +162,29 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
     });
   };
 
-  const handleFilterChange = (columnKey: string, value: string) => {
-    setConfig({
-      ...config,
-      filterConfig: {
-        ...config.filterConfig,
-        [columnKey]: value
-      }
+  const handleMultiSelectFilter = (columnKey: string, value: string) => {
+    setActiveFilters(prev => {
+      const currentValues = prev[columnKey] || [];
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter(v => v !== value)
+        : [...currentValues, value];
+      
+      return {
+        ...prev,
+        [columnKey]: newValues
+      };
     });
+  };
+
+  const removeFilterChip = (columnKey: string, value: string) => {
+    setActiveFilters(prev => ({
+      ...prev,
+      [columnKey]: (prev[columnKey] || []).filter(v => v !== value)
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setActiveFilters({});
   };
 
   const toggleColumnVisibility = (columnKey: string) => {
@@ -157,80 +198,129 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
   };
 
   const visibleColumns = config.columns.filter(col => col.visible !== false);
-  const uniqueValues = {
-    phase: [...new Set(data.map(item => item.phase))],
-    category: [...new Set(data.map(item => item.category))],
-    status: [...new Set(data.map(item => item.status))],
-    priority: [...new Set(data.map(item => item.priority))]
+  const hasActiveFilters = Object.values(activeFilters).some(values => values.length > 0);
+
+  const getSortIcon = (columnKey: string) => {
+    if (config.sortConfig.key !== columnKey) {
+      return (
+        <div className="flex flex-col opacity-50">
+          <ChevronUp size={12} className="text-gray-400" />
+          <ChevronDown size={12} className="text-gray-400 -mt-1" />
+        </div>
+      );
+    }
+    
+    return (
+      <div className="flex flex-col">
+        <ChevronUp 
+          size={12} 
+          className={config.sortConfig.direction === 'asc' ? 'text-blue-600' : 'text-gray-300'} 
+        />
+        <ChevronDown 
+          size={12} 
+          className={`${config.sortConfig.direction === 'desc' ? 'text-blue-600' : 'text-gray-300'} -mt-1`} 
+        />
+      </div>
+    );
+  };
+
+  const FilterDropdown: React.FC<{ column: ColumnConfig<SequenceOfEvents> }> = ({ column }) => {
+    const columnKey = String(column.key);
+    const values = uniqueValues[columnKey as keyof typeof uniqueValues] || [];
+    const selectedValues = activeFilters[columnKey] || [];
+    
+    return (
+      <div 
+        ref={dropdownRef}
+        className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-48"
+      >
+        <div className="p-3 border-b border-gray-100">
+          <div className="flex items-center justify-between">
+            <span className="font-medium text-sm">Filter {column.header}</span>
+            <button
+              onClick={() => setOpenFilterDropdown(null)}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+        <div className="max-h-64 overflow-y-auto p-2">
+          {values.map(value => (
+            <label
+              key={value}
+              className="flex items-center px-2 py-1.5 hover:bg-gray-50 rounded cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                checked={selectedValues.includes(value)}
+                onChange={() => handleMultiSelectFilter(columnKey, value)}
+                className="mr-2 rounded"
+              />
+              <span className="text-sm">{value}</span>
+              {selectedValues.includes(value) && (
+                <Check size={14} className="ml-auto text-blue-600" />
+              )}
+            </label>
+          ))}
+        </div>
+      </div>
+    );
   };
 
   return (
     <div className="space-y-4">
-      {/* Table Controls */}
-      <div className="flex justify-between items-center">
-        <div className="flex space-x-4">
-          {/* Filter Controls */}
-          <select 
-            className="px-3 py-2 border rounded-md text-body font-body"
-            value={config.filterConfig.phase || 'all'}
-            onChange={(e) => handleFilterChange('phase', e.target.value)}
+      {/* Multi-select Filter Chips */}
+      {hasActiveFilters && (
+        <div className="flex flex-wrap items-center gap-2 p-3 bg-gray-50 rounded-lg">
+          <span className="text-sm font-medium text-gray-600">Active Filters:</span>
+          {Object.entries(activeFilters).map(([columnKey, values]) =>
+            values.map(value => (
+              <div
+                key={`${columnKey}-${value}`}
+                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+              >
+                <span className="font-medium capitalize">{columnKey}:</span>
+                <span>{value}</span>
+                <button
+                  onClick={() => removeFilterChip(columnKey, value)}
+                  className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                >
+                  <X size={12} />
+                </button>
+              </div>
+            ))
+          )}
+          <button
+            onClick={clearAllFilters}
+            className="text-sm text-red-600 hover:text-red-800 font-medium"
           >
-            <option value="all">All Phases</option>
-            {uniqueValues.phase.map(phase => (
-              <option key={phase} value={phase}>{phase}</option>
-            ))}
-          </select>
-
-          <select 
-            className="px-3 py-2 border rounded-md text-body font-body"
-            value={config.filterConfig.status || 'all'}
-            onChange={(e) => handleFilterChange('status', e.target.value)}
-          >
-            <option value="all">All Status</option>
-            {uniqueValues.status.map(status => (
-              <option key={status} value={status}>
-                {status.replace('_', ' ').toUpperCase()}
-              </option>
-            ))}
-          </select>
-
-          <select 
-            className="px-3 py-2 border rounded-md text-body font-body"
-            value={config.filterConfig.priority || 'all'}
-            onChange={(e) => handleFilterChange('priority', e.target.value)}
-          >
-            <option value="all">All Priority</option>
-            {uniqueValues.priority.map(priority => (
-              <option key={priority} value={priority}>
-                {priority.toUpperCase()}
-              </option>
-            ))}
-          </select>
+            Clear All
+          </button>
         </div>
+      )}
 
-        {/* Column Settings Toggle */}
+      {/* Column Configuration */}
+      <div className="flex justify-end">
         <div className="relative">
           <button
             onClick={() => setConfig({ ...config, showColumnSettings: !config.showColumnSettings })}
-            className="flex items-center space-x-2 px-3 py-2 border rounded-md hover:bg-gray-50"
+            className="flex items-center space-x-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 shadow-sm"
           >
             <Settings size={16} />
-            <span className="text-body font-body">Columns</span>
+            <span className="text-sm font-medium">Configure Columns</span>
           </button>
 
-          {/* Column Settings Dropdown Overlay */}
           {config.showColumnSettings && (
             <>
-              {/* Backdrop */}
               <div 
                 className="fixed inset-0 z-40"
                 onClick={() => setConfig({ ...config, showColumnSettings: false })}
               />
               
-              {/* Dropdown Panel */}
-              <div className="absolute right-0 top-full mt-2 z-50 bg-gray-50 p-4 rounded-md border shadow-lg min-w-80">
-                <h4 className="font-body-bold mb-3">Configure Columns</h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              <div className="absolute right-0 top-full mt-2 z-50 bg-white p-4 rounded-lg border border-gray-200 shadow-lg min-w-80">
+                <h4 className="font-semibold mb-3">Configure Columns</h4>
+                <div className="grid grid-cols-2 gap-3">
                   {config.columns.map(column => (
                     <label key={String(column.key)} className="flex items-center space-x-2">
                       <input
@@ -239,7 +329,7 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
                         onChange={() => toggleColumnVisibility(String(column.key))}
                         className="rounded"
                       />
-                      <span className="text-body font-body">{column.header}</span>
+                      <span className="text-sm">{column.header}</span>
                     </label>
                   ))}
                 </div>
@@ -249,83 +339,101 @@ export const SequenceTable: React.FC<SequenceTableProps> = ({
         </div>
       </div>
 
-      {/* Table */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {visibleColumns.map((column, index) => (
-              <TableHead 
-                key={String(column.key)}
-                className={`${column.sortable ? 'cursor-pointer select-none hover:bg-gray-50' : ''}`}
-                style={{ width: column.width }}
-                onClick={() => column.sortable && handleSort(String(column.key))}
-              >
-                <div className="flex items-center space-x-1">
-                  <span>{column.header}</span>
-                  {column.sortable && (
-                    <div className="flex flex-col">
-                      <ChevronUp 
-                        size={12} 
-                        className={`${config.sortConfig.key === column.key && config.sortConfig.direction === 'asc' 
-                          ? 'text-blue-600' : 'text-gray-400'}`} 
-                      />
-                      <ChevronDown 
-                        size={12} 
-                        className={`${config.sortConfig.key === column.key && config.sortConfig.direction === 'desc' 
-                          ? 'text-blue-600' : 'text-gray-400'} -mt-1`} 
-                      />
+      {/* Enhanced Table */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              {visibleColumns.map((column) => (
+                <TableHead 
+                  key={String(column.key)}
+                  className="px-4 py-3 relative"
+                  style={{ width: column.width }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div 
+                      className={`flex items-center space-x-2 ${column.sortable ? 'cursor-pointer select-none hover:text-blue-600' : ''}`}
+                      onClick={() => column.sortable && handleSort(String(column.key))}
+                    >
+                      <span className="font-semibold text-sm">{column.header}</span>
+                      {column.sortable && getSortIcon(String(column.key))}
                     </div>
-                  )}
-                </div>
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sortedData.map((sequence, index) => (
-            <TableRow 
-              key={sequence.id} 
-              onClick={() => onSequenceClick?.(sequence)} 
-              className="cursor-pointer hover:bg-gray-50"
-            >
-              {visibleColumns.map(column => (
-                <TableCell key={String(column.key)} style={{ width: column.width }}>
-                  {column.render ? column.render(sequence) : (() => {
-                    if (column.key === 'id') return index + 1;
-                    if (column.key === 'sequenceTitle') {
-                      return (
-                        <div className="max-w-xs truncate font-body-bold" title={sequence.sequenceTitle}>
-                          {sequence.sequenceTitle}
-                        </div>
-                      );
-                    }
-                    if (column.key === 'phase') {
-                      return (
-                        <span className={`px-2 py-1 rounded text-caption font-caption ${
-                          sequence.phase === 'Pre-Contract Phase' ? 'bg-purple-100 text-purple-800' :
-                          sequence.phase === 'Contract Execution Phase' ? 'bg-blue-100 text-blue-800' :
-                          sequence.phase === 'Operational Phase' ? 'bg-green-100 text-green-800' :
-                          'bg-orange-100 text-orange-800'
-                        }`}>
-                          {sequence.phase}
-                        </span>
-                      );
-                    }
-                    if (column.key === 'description') {
-                      return (
-                        <div className="max-w-sm truncate text-body font-body" title={sequence.description}>
-                          {sequence.description}
-                        </div>
-                      );
-                    }
-                    return String(sequence[column.key as keyof SequenceOfEvents] || '-');
-                  })()}
-                </TableCell>
+                    
+                    {/* Inline Filter Button */}
+                    {column.filterable && (
+                      <button
+                        onClick={() => setOpenFilterDropdown(
+                          openFilterDropdown === String(column.key) ? null : String(column.key)
+                        )}
+                        className={`ml-2 p-1 rounded hover:bg-gray-200 ${
+                          (activeFilters[String(column.key)] || []).length > 0 
+                            ? 'text-blue-600 bg-blue-50' 
+                            : 'text-gray-400'
+                        }`}
+                      >
+                        <Filter size={14} />
+                      </button>
+                    )}
+                    
+                    {/* Filter Dropdown */}
+                    {column.filterable && openFilterDropdown === String(column.key) && (
+                      <FilterDropdown column={column} />
+                    )}
+                  </div>
+                </TableHead>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {sortedData.map((sequence, index) => (
+              <TableRow 
+                key={sequence.id} 
+                onClick={() => onSequenceClick?.(sequence)} 
+                className="cursor-pointer hover:bg-blue-50 transition-colors"
+              >
+                {visibleColumns.map(column => (
+                  <TableCell key={String(column.key)} className="px-4 py-3" style={{ width: column.width }}>
+                    {column.render ? column.render(sequence) : (() => {
+                      if (column.key === 'id') return index + 1;
+                      if (column.key === 'sequenceTitle') {
+                        return (
+                          <div className="max-w-xs truncate font-semibold text-gray-900" title={sequence.sequenceTitle}>
+                            {sequence.sequenceTitle}
+                          </div>
+                        );
+                      }
+                      if (column.key === 'phase') {
+                        return (
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            sequence.phase === 'Pre-Contract Phase' ? 'bg-purple-100 text-purple-800' :
+                            sequence.phase === 'Contract Execution Phase' ? 'bg-blue-100 text-blue-800' :
+                            sequence.phase === 'Operational Phase' ? 'bg-green-100 text-green-800' :
+                            'bg-orange-100 text-orange-800'
+                          }`}>
+                            {sequence.phase}
+                          </span>
+                        );
+                      }
+                      if (column.key === 'description') {
+                        return (
+                          <div className="max-w-sm truncate text-gray-600" title={sequence.description}>
+                            {sequence.description}
+                          </div>
+                        );
+                      }
+                      return (
+                        <span className="text-gray-700">
+                          {String(sequence[column.key as keyof SequenceOfEvents] || '-')}
+                        </span>
+                      );
+                    })()}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };

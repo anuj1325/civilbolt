@@ -53,14 +53,14 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-default-background">
       <div className="p-6">
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-heading-1 text-gray-800">Draft Management</h1>
+            <h1 className="text-heading-1 font-heading-1 text-default-font">Draft Management</h1>
             <button
               onClick={() => onNavigate?.('drafting')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-brand-primary text-white rounded-lg hover:bg-brand-primary/90 transition-colors font-body-bold text-body-bold"
             >
               Create New Draft
             </button>
@@ -73,10 +73,10 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
               placeholder="Search drafts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-neutral-border rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent font-body text-body"
             />
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-5 w-5 text-subtext-color" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -89,45 +89,45 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Draft Name</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Description</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Subject</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Draft Number</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Letter Reference</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">To</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Copy To</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-caption-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Draft Name</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Description</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Subject</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Draft Number</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Letter Reference</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">To</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Copy To</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-caption-bold font-caption-bold text-subtext-color uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredDrafts.map((draft) => (
                   <tr key={draft.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-body-bold text-gray-900">{draft.draftName}</div>
-                      <div className="text-caption text-gray-500">Created: {new Date(draft.createdDate).toLocaleDateString()}</div>
+                      <div className="text-body-bold font-body-bold text-default-font">{draft.draftName}</div>
+                      <div className="text-caption font-caption text-subtext-color">Created: {new Date(draft.createdDate).toLocaleDateString()}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-body text-gray-900 max-w-xs truncate" title={draft.description}>
+                      <div className="text-body font-body text-default-font max-w-xs truncate" title={draft.description}>
                         {draft.description}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-body text-gray-900 max-w-xs truncate" title={draft.subject}>
+                      <div className="text-body font-body text-default-font max-w-xs truncate" title={draft.subject}>
                         {draft.subject}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body font-body text-default-font">
                       {draft.draftNumber}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body font-body text-default-font">
                       {draft.letterInReference}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-body text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body font-body text-default-font">
                       {draft.to}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-body text-gray-900">
+                      <div className="text-body font-body text-default-font">
                         {draft.copyTo.length > 0 ? draft.copyTo.join(', ') : '-'}
                       </div>
                     </td>
@@ -135,24 +135,24 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
                       <select
                         value={draft.status}
                         onChange={(e) => handleStatusUpdate(draft.id, e.target.value as Draft['status'])}
-                        className={`text-caption px-2 py-1 rounded-full border-0 focus:ring-2 focus:ring-blue-500 ${getStatusBadgeColor(draft.status)}`}
+                        className={`text-caption font-caption px-2 py-1 rounded-full border-0 focus:ring-2 focus:ring-brand-primary ${getStatusBadgeColor(draft.status)}`}
                       >
                         {getStatusOptions(draft.status).map(status => (
                           <option key={status} value={status}>{status}</option>
                         ))}
                       </select>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-body-bold">
+                    <td className="px-6 py-4 whitespace-nowrap text-body-bold font-body-bold">
                       <div className="flex space-x-2">
                         <button
                           onClick={() => onEditDraft?.(draft.id)}
-                          className="text-blue-600 hover:text-blue-900"
+                          className="text-brand-primary hover:text-brand-primary/80"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => {/* Handle view */}}
-                          className="text-gray-600 hover:text-gray-900"
+                          className="text-subtext-color hover:text-default-font"
                         >
                           View
                         </button>
@@ -166,7 +166,7 @@ export const DraftManagement: React.FC<DraftManagementProps> = ({ onNavigate, on
           
           {filteredDrafts.length === 0 && (
             <div className="text-center py-8">
-              <p className="text-gray-500">
+              <p className="text-body font-body text-subtext-color">
                 {searchQuery ? 'No drafts found matching your search.' : 'No drafts available.'}
               </p>
             </div>

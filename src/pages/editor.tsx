@@ -25,9 +25,9 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
   const colors = getColor(score);
   
   return (
-    <div className="flex flex-col items-center min-w-[80px] bg-white p-3 rounded-lg border border-gray-100 shadow-sm">
-      <span className="text-xs font-semibold text-gray-700 mb-2">{label}</span>
-      <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden mb-2">
+    <div className="flex flex-col items-center min-w-[80px] bg-white p-3 rounded-lg border border-neutral-border shadow-sm">
+      <span className="text-caption font-caption-bold text-subtext-color mb-2">{label}</span>
+      <div className="w-full h-2 rounded-full bg-neutral-200 overflow-hidden mb-2">
         <div 
           className={`${colors.bg} h-2 rounded-full transition-all duration-500 ease-out relative`} 
           style={{ width: `${score}%` }} 
@@ -36,7 +36,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score }) => {
         </div>
       </div>
       <span className={`text-lg font-bold ${colors.text}`}>{score}</span>
-      <span className="text-xs text-gray-500">
+      <span className="text-caption font-caption text-subtext-color">
         {score >= 90 ? 'Excellent' : score >= 80 ? 'Good' : score >= 70 ? 'Fair' : score >= 60 ? 'Needs Work' : 'Poor'}
       </span>
     </div>
@@ -569,7 +569,7 @@ const Editor: React.FC<EditorProps> = ({ onNavigate, onClose, referenceLetter, a
             <div className="mb-3">
               <button
                 onClick={() => onNavigate('timeline')}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-body font-body text-brand-primary hover:text-brand-primary/80 hover:bg-brand-primary/5 rounded-lg transition-colors"
               >
                 <span>←</span>
                 <span>Back to Timeline</span>

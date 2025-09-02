@@ -44,7 +44,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score, maxScore = 100 }) => 
   const percentage = Math.min((score / maxScore) * 100, 100);
   
   return (
-    <div className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200">
+    <div className="bg-white rounded-lg p-4 border border-neutral-border shadow-sm hover:shadow-md transition-all duration-200">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
@@ -52,19 +52,19 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score, maxScore = 100 }) => 
             {config.icon}
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900 text-sm">{label}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{config.description}</p>
+            <h3 className="text-body-bold font-body-bold text-default-font">{label}</h3>
+            <p className="text-caption font-caption text-subtext-color mt-0.5">{config.description}</p>
           </div>
         </div>
         <div className="text-right">
           <div className={`text-xl font-bold ${colors.text}`}>{score}</div>
-          <div className="text-xs text-gray-400">/{maxScore}</div>
+          <div className="text-caption font-caption text-subtext-color">/{maxScore}</div>
         </div>
       </div>
       
       {/* Progress Bar */}
       <div className="relative">
-        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-neutral-100 rounded-full overflow-hidden">
           <div
             className={`h-full ${colors.bg} transition-all duration-500 ease-out rounded-full relative`}
             style={{ width: `${percentage}%` }}
@@ -75,7 +75,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score, maxScore = 100 }) => 
         </div>
         
         {/* Progress markers */}
-        <div className="flex justify-between mt-1 text-xs text-gray-400">
+        <div className="flex justify-between mt-1 text-caption font-caption text-subtext-color">
           <span>0</span>
           <span>25</span>
           <span>50</span>
@@ -86,7 +86,7 @@ const ScoreBar: React.FC<ScoreBarProps> = ({ label, score, maxScore = 100 }) => 
       
       {/* Score interpretation */}
       <div className="mt-2 text-center">
-        <span className={`text-xs px-2 py-1 rounded-full font-medium ${colors.bg} ${colors.text} bg-opacity-10`}>
+        <span className={`text-caption font-caption-bold px-2 py-1 rounded-full ${colors.bg} ${colors.text} bg-opacity-10`}>
           {score >= 90 ? 'Excellent' : score >= 80 ? 'Good' : score >= 70 ? 'Fair' : score >= 60 ? 'Needs Improvement' : 'Poor'}
         </span>
       </div>
@@ -187,8 +187,8 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             onClick={() => setSidebarTab("score")}
             className={`flex-1 py-3 text-body text-body-bold transition-colors border-b-2 ${
               sidebarTab === "score"
-                ? "border-blue-600 text-blue-600 bg-white"
-                : "border-transparent text-gray-500 hover:text-blue-600"
+                ? "border-brand-primary text-brand-primary bg-white"
+                : "border-transparent text-subtext-color hover:text-brand-primary"
             }`}
           >
             Score
@@ -197,8 +197,8 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             onClick={() => setSidebarTab("citations")}
             className={`flex-1 py-3 text-body text-body-bold transition-colors border-b-2 ${
               sidebarTab === "citations"
-                ? "border-blue-600 text-blue-600 bg-white"
-                : "border-transparent text-gray-500 hover:text-blue-600"
+                ? "border-brand-primary text-brand-primary bg-white"
+                : "border-transparent text-subtext-color hover:text-brand-primary"
             }`}
           >
             Citations
@@ -209,13 +209,13 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
         {sidebarTab === "score" && (
           <div className="p-6">
             {/* Overall Score Header */}
-            <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+            <div className="mb-6 p-4 bg-gradient-to-r from-brand-primary/5 to-brand-primary/10 rounded-xl border border-brand-primary/20">
               <div className="text-center">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">Overall Score</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-2">
+                <h3 className="text-heading-3 font-heading-3 text-default-font mb-1">Overall Score</h3>
+                <div className="text-3xl font-bold text-brand-primary mb-2">
                   {Math.round((legalScore + contractualScore + lexicalScore + grammaticalScore) / 4)}
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-body font-body text-subtext-color">
                   Average of all metrics
                 </div>
               </div>
@@ -266,10 +266,10 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
             {/* Letter References Section */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-caption-bold text-gray-800">Letter References</h3>
+                <h3 className="text-caption-bold font-caption-bold text-default-font">Letter References</h3>
                 <button
                   onClick={() => setShowReferenceModal(true)}
-                  className="flex items-center gap-1 px-3 py-1 bg-blue-500 text-white text-body-bold rounded hover:bg-blue-600 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1 bg-brand-primary text-white text-body-bold font-body-bold rounded hover:bg-brand-primary/90 transition-colors"
                 >
                   <Plus size={14} />
                   Add Reference
@@ -307,7 +307,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                   ))}
                 </div>
               ) : (
-                <p className="text-body text-gray-500">
+                <p className="text-body font-body text-subtext-color">
                   No letter references added yet.
                 </p>
               )}
@@ -323,7 +323,7 @@ const EditorSidebar: React.FC<EditorSidebarProps> = ({
                   ))}
                 </ul>
               ) : (
-                <p className="text-body text-gray-500">
+                <p className="text-body font-body text-subtext-color">
                   No legal citations found in the draft.
                 </p>
               )}
